@@ -12,6 +12,7 @@ public:
 	int approximateLifeTime; // предположительное время жизни
 	char name[15];
 	char lastName[20];
+	//комментарий!
 
 };
 
