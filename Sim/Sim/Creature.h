@@ -1,6 +1,7 @@
 #ifndef CREATURE
 #define CREATURE
 #include <SFML/Graphics.hpp>
+#include "enums.h"
 
 using namespace sf;
 

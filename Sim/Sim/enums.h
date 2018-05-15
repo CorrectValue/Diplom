@@ -78,6 +78,13 @@ enum humanz
 	yellow
 };
 
+enum gender
+{
+	male,
+	female,
+	attackHelicopter
+};
+
 enum guiTypes
 {
 	startWindow,
