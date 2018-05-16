@@ -93,6 +93,14 @@ enum guiTypes
 	loadWindow
 };
 
+enum directions
+{
+	up,
+	dright,
+	down,
+	dleft
+};
+
 //enum items
 //{};
 

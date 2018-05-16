@@ -1,23 +1,48 @@
-﻿Build started 05.03.2018 20:58:54.
-     1>Project "C:\Users\Леха\Documents\Visual Studio 2013\Projects\Sim\Sim\Sim.vcxproj" on node 2 (Build target(s)).
+﻿Build started 16.05.2018 20:42:55.
+     1>Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\include" /I"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\include" /I"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Creature.cpp human.cpp Main.cpp UI.cpp world.cpp
+         world.cpp
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(10): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(116): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(232): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(241): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(247): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(270): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(271): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(285): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(294): warning C4244: '-=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(390): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(500): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(555): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(564): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         UI.cpp
          Main.cpp
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(50): warning C4244: 'initializing' : conversion from 'sf::Int64' to 'float', possible loss of data
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(67): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(69): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(71): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(75): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(77): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\леха\documents\visual studio 2013\projects\sim\sim\main.cpp(79): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(50): warning C4244: 'initializing' : conversion from 'sf::Int64' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(67): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(69): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(71): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(75): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(77): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(79): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         human.cpp
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\human.cpp(32): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\human.cpp(33): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\human.cpp(59): warning C4305: '=' : truncation from 'double' to 'float'
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\human.cpp(60): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+         Creature.cpp
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Леха\Documents\Visual Studio 2013\Projects\Sim\Debug\Sim.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\lib" /LIBPATH:"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" "tgui-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Леха\Documents\Visual Studio 2013\Projects\Sim\Debug\Sim.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Леха\Documents\Visual Studio 2013\Projects\Sim\Debug\Sim.lib" /MACHINE:X86 Debug\Creature.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\lib" /LIBPATH:"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" "tgui-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.lib" /MACHINE:X86 Debug\Creature.obj
+         Debug\human.obj
          Debug\Main.obj
          Debug\UI.obj
          Debug\world.obj
-         Sim.vcxproj -> C:\Users\Леха\Documents\Visual Studio 2013\Projects\Sim\Debug\Sim.exe
-     1>Done Building Project "C:\Users\Леха\Documents\Visual Studio 2013\Projects\Sim\Sim\Sim.vcxproj" (Build target(s)).
+     1>human.obj : error LNK2001: unresolved external symbol "public: static int Creature::meanLifeTime" (?meanLifeTime@Creature@@2HA)
+     1>human.obj : error LNK2001: unresolved external symbol "private: static int human::globalID" (?globalID@human@@0HA)
+     1>C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.exe : fatal error LNK1120: 2 unresolved externals
+     1>Done Building Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.46
+Time Elapsed 00:00:08.80
