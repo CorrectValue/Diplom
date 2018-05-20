@@ -29,11 +29,11 @@ enum timeOfYear
 
 enum weather
 {
-	fallout, 
-	cloudy,
-	clear,
-	fury,
-	gray
+	fallout, //осадки: дождь либо снег
+	cloudy,	//облачно
+	clear,	//ясно
+	storm,	//буря
+	gray	//пасмурно
 };
 
 enum month

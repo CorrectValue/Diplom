@@ -7,7 +7,10 @@ void world::timeManipulation(float time)
 
 	//получили время, прошедшее с момента последнего обновления, надо каким-то образом прирастить его к имеющемуся
 	//с учётом скорости течения времени
-	currentTimeSeconds += time * speed; //СКОРОСТЬ ПОЧЕМУ-ТО НЕ РАБОТАЕТ, ЕМУ ВАЩЕ ПОХУЙ
+	currentTimeSeconds += time * speed; //СКОРОСТЬ ПОЧЕМУ-ТО НЕ РАБОТАЕТ
+
+	//время прошло - таймер погоды сбиваем
+	weatherTimer -= time * speed;
 
 	//переброс на минуту
 	if (currentTimeSeconds > 59)
@@ -107,14 +110,24 @@ void world::timeManipulation(float time)
 void world::weatherManipulation()
 {
 	//управляет погодой в мире
-
+	if (weatherTimer <= 0)
+	{
+		//одна погода закончилась, заряжай другую
+		changeWeather();
+	}
 }
 
 void world::changeWeather()
 {
 	//пора менять погоду! кидаем кубик
-	srand(time(0));
 	//думай, из всех ли погодных условий может быть осуществлён переход во все остальные
+	//из всех
+	curWeather = rand() % 5;
+	//вариант погоды выбран, установим таймер
+	//погода может быть одного типа от двух часов до пары суток, рандомно
+	//В СЕКУНДАХ
+	weatherTimer = 7200 + rand() % 165600; //итого таймер устанавливается рандомно в диапазоне от 7200 до 165600+7200 секунд
+
 }
 
 world::world(String tileset)
@@ -254,8 +267,9 @@ void world::envManipulation(RenderWindow& window)
 	//управляет окружением
 	//конкретно интересует освещение в дневное и ночное время
 	//погодные условия
-	RectangleShape overlayBlue, overlayYellow; //синий - для ночи, жёлтый - для заката и рассвета
+	RectangleShape overlayBlue, overlayYellow, overlayGray; //синий - для ночи, жёлтый - для заката и рассвета, серый - для погоды
 	overlayBlue.setPosition(0, 0);
+	overlayGray.setPosition(0, 0);
 	Vector2f size;
 	
 	//идея: как и ирл, есть дни солнцестояния. соответственно, меняются продолжительности дня и ночи, вот так-то, ёпта!
@@ -271,6 +285,7 @@ void world::envManipulation(RenderWindow& window)
 	size.y = window.getSize().y;
 	overlayBlue.setSize(size);
 	overlayYellow.setSize(size);
+	overlayGray.setSize(size);
 
 	minutesPastMidnight = currentTimeHours * 60 + currentTimeMinutes;
 	
@@ -308,7 +323,33 @@ void world::envManipulation(RenderWindow& window)
 	//overlayYellow.setFillColor(Color(255, 232, 75, yellowAlphaColor));
 	window.draw(overlayBlue);
 	//window.draw(overlayYellow);
-	
+
+	//обработка погоды
+	switch (curWeather)
+	{
+	case clear:
+		//при ясной погоде ничего не меняется, всё ярко и красиво
+		grayAlphaColor = 0;
+		break;
+	case cloudy:
+		//при облачной погоде яркость мира чуть снижается, процентов на двадцать
+		grayAlphaColor = 52;
+		break;
+	case fallout:
+		//поскольку осадков при ясной погоде не бывает (редко), то яркость падает на 30%, добавляется серый цвет
+		grayAlphaColor = 78;
+		//стоит добавить эффект осадков вообще, но пока хз
+		break;
+	case storm:
+		//во время бури вообще мало что видно, всё серое
+		grayAlphaColor = 125;
+		break;
+	case gray:
+		//просто пасмурная погода, серый цвет и тусклота
+		grayAlphaColor = 65;
+		break;
+	}
+	window.draw(overlayGray);
 }
 
 void world::update(RenderWindow& window, float time)
@@ -474,8 +515,8 @@ void world::displayInfo()
 	case fallout:
 		printf("fallout");
 		break;
-	case fury:
-		printf("fury");
+	case storm:
+		printf("storm");
 		break;
 	case cloudy:
 		printf("cloudy");

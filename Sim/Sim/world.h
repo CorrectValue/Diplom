@@ -23,6 +23,7 @@ public:
 	int currentTimeMinutes; //минуты
 	int currentTimeSeconds; //секунды
 	int curWeather; //текущая погода - смотри enum
+	int weatherTimer; //таймер до смены погоды в секундах
 	int season;
 	int day; //день месяца
 	int month; //месяц
@@ -58,6 +59,7 @@ public:
 	bool minutePassed; //прошла минута
 
 	int blueAlphaColor; //прозрачность ночи
+	int grayAlphaColor; //прозрачность серого оверлея для погоды
 
 	int darkestAlpha; //прозрачность ночи в самое тёмное время
 
