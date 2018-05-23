@@ -8,6 +8,7 @@
 
 
 using namespace sf;
+using namespace std;
 
 const int width = 64;
 const int height = 48;
@@ -50,6 +51,8 @@ public:
 	int dayOfYear;
 	int daysInMonth[12];
 
+	static vector<cell> validCells; //пустые клетки, доступные для спавна персонажей или лута
+
 	int minutesPastMidnight, MinutesRiseTime, MinutesSetTime; //минут после полуночи
 	
 	int riseSetDuration; //продолжительность утренних и вечерних сумерек в минутах
@@ -82,6 +85,9 @@ public:
 	void update(RenderWindow& window, float time);
 	void displayInfo(); //выводит информацию о текущем положении вещей
 	int placeNineBlock(int x, int y, char c); //генерирует блок 3х3 клетки заданных символов
+	void distributeObjects(); //распределяет объекты по игровой карте
+	void makeWater(); //случайно добавляет на карту водоёмы
+	void prepareValidCellsList(); //подготавливает список доступных клеток для спавна
 
 	void generateSimpleMap();
 

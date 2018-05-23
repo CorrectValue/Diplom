@@ -771,3 +771,117 @@ void world::generateSimpleMap()
 
 
 }
+
+void world::distributeObjects()
+{
+	//нужно сгенерировать кучу различных типов объектов
+	//это камень, куст, дерево
+	//сгенерировать число камней, кустов, деревьев
+	int rocksCount, bushesCount, treesCount, randNum;
+	rocksCount = rand() % (width*height/9) + 1; //девятая часть карты должна быть занята камнями
+	bushesCount = rand() % (width*height / 7) + 1; //кустов должно быть побольше, т.к. с них жители берут ягоды
+	treesCount = rand() % (width*height / 5) + 1; //деревьев должно быть ещё больше, т.к. это не только еда, но и древесина
+	//ну и разместить
+	//камни
+	for (int i = 0; i < rocksCount; i++)
+	{
+		randNum = rand() % validCells.size();
+		cell tmp = validCells[randNum];
+		//клетка более не считается доступной
+		validCells.erase(validCells.begin() + randNum);
+		//позиция выбрана, остаётся разместить
+	}
+	//кусты
+	for (int i = 0; i < bushesCount; i++)
+	{
+		randNum = rand() % validCells.size();
+		cell tmp = validCells[randNum];
+		//клетка более не считается доступной
+		validCells.erase(validCells.begin() + randNum);
+		//позиция выбрана, остаётся разместить
+	}
+	//деревья
+	for (int i = 0; i < treesCount; i++)
+	{
+		randNum = rand() % validCells.size();
+		cell tmp = validCells[randNum];
+		//клетка более не считается доступной
+		validCells.erase(validCells.begin() + randNum);
+		//позиция выбрана, остаётся разместить
+	}
+}
+
+void world::makeWater()
+{
+	//нужно найти несколько соседних клеток и разместить на них водоём
+	//генерируем число водоёмов
+	int waterCount = rand() % 3 + 1; //на карте может быть от 1 до 4 водоёмов
+	int waterSize, waterCenterX, waterCenterY;
+	for (int i = 0; i < waterCount; i++)
+	{
+		//рандомно генерируем размер водоёма
+		 waterSize = rand() % 10 + 2; //от 2 до 12 клеток
+		//генерируем центр водоёма
+		waterCenterX = rand() % (width - 2) + 1; //по идее, от 1 до width-1, чтобы не попадать на края
+		waterCenterY = rand() % (height - 2) + 1; //аналогично
+		//размещаем водоём
+		TileMap[waterCenterY][waterCenterX] = 'v'; //клетка в центре
+		waterSize--;
+		int dr, pm, currentX, currentY;
+		while (waterSize > 0)
+		{
+			dr = rand() % 1; //направление движения Х или Y
+			pm = rand() % 1; // плюс или минус
+			//это хрень
+			//switch (dr)
+			//{
+			//case 0:
+			//	//координата меняется по X
+			//	switch (pm)
+			//	{
+			//	case 0:
+			//		//в положительную сторону
+			//		if (TileMap[currentY][currentX] == ' ')
+			//		{
+
+			//		}
+			//		break;
+			//	case 1:
+			//		//в отрицательную сторону
+			//		break;	
+			//	}
+			//	break;
+			//case 1:
+			//	//координата меняется по Y
+			//	switch (pm)
+			//	{
+			//	case 0:
+			//		//в положительную сторону
+			//		break;
+			//	case 1:
+			//		//в отрицательную сторону
+			//		break;
+			//	}
+			//	break;
+			//}
+			waterSize--;
+		}
+	}
+
+}
+
+void world::prepareValidCellsList()
+{
+	//все клетки, где просто трава - доступные
+	for (int i = 0; i < width; i++)
+	{
+		for (int j = 0; j < height; j++)
+		{
+			if (TileMap[j][i] == ' ')
+			{
+				cell temp = { j, i };
+				validCells.insert(validCells.end(), temp);
+			}
+		}
+	}
+}

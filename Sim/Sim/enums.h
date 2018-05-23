@@ -101,6 +101,12 @@ enum directions
 	dleft
 };
 
+struct cell
+{
+	int x;
+	int y;
+};
+
 //enum items
 //{};
 
