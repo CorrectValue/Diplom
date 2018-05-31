@@ -19,6 +19,9 @@ class world
 
 
 public:
+
+	String tileset;
+
 	int curTimeOfDay; //текущее время суток в строковом формате - смотри enum
 	int currentTimeHours; //часы текущего времени
 	int currentTimeMinutes; //минуты
@@ -76,7 +79,7 @@ public:
 
 
 	void draw(RenderWindow& window);
-	world(String tileset);
+	world();
 
 	void timeManipulation(float time); //для всей смены времени: прирост секунд, минут, дней, годов и так далее
 	void weatherManipulation(); //манипуляция погодой

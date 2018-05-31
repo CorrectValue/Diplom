@@ -8,6 +8,7 @@ vector<String> human::femaleNames;
 vector<String> human::lastNames;
 vector<String> human::maleAppearances;
 vector<String> human::femaleAppearances;
+int human::globalID = 0;
 
 human::human()
 {
@@ -60,6 +61,8 @@ human::human()
 	runningSpeed = 0.2 + agility / 2 * 33 / 200; //скорость бега выше
 	//направление движения в начале
 	dir = rand() % 4;
+
+	respawnTimer = rand() % 30000 + 5000; //в тиках?
 
 }
 

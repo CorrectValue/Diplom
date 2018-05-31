@@ -1,4 +1,7 @@
 #include "world.h"
+#include <iostream>
+
+vector<cell> world::validCells;
 
 void world::timeManipulation(float time)
 {
@@ -6,7 +9,6 @@ void world::timeManipulation(float time)
 	//как бох
 
 	//получили время, прошедшее с момента последнего обновления, надо каким-то образом прирастить его к имеющемуся
-	//с учётом скорости течения времени
 	currentTimeSeconds += time * speed; //СКОРОСТЬ ПОЧЕМУ-ТО НЕ РАБОТАЕТ
 
 	//время прошло - таймер погоды сбиваем
@@ -130,9 +132,33 @@ void world::changeWeather()
 
 }
 
-world::world(String tileset)
+world::world()
 {
-	//конструктор по умолчанию нужен скорее для дебага, в дальнейшем будет использован параметризированный
+	//конструктор по умолчанию 
+	//установить прочие важные и не очень данные
+	//первое января первого года! Зима!
+	year = 1;
+	month = Jan;
+	day = 1;
+	dayOfWeek = Mon;
+	season = Winter;
+	//установить тайлсет для карты
+	tileset = "Images/map-winter.png";
+	/*switch (season)
+	{
+	case Winter:
+		tileset = "Images/map-winter.png";
+		break;
+	case Summer:
+		tileset = "Images/map-summer.png";
+		break;
+	case Spring:
+		tileset = "Images/map-summer.png";
+		break;
+	case Fall:
+		tileset = "Images/map-summer.png";
+		break;
+	}*/
 
 	generateSimpleMap();
 	//makePreGenMap();
@@ -145,22 +171,15 @@ world::world(String tileset)
 
 	minutePassed = false;
 
-	//установить прочие важные и не очень данные
-	//первое января первого года! Зима, нахуй!
-	year = 1;
-	month = Jan;
-	day = 1;
-	dayOfWeek = Mon;
-	season = Winter;
+
 	//
 	curWeather = clear;
-	//времечко блеать
-	//шесть утра нахой, самое время 
+	//времечко шесть утра 
 	currentTimeHours = 12;
 	currentTimeMinutes = 0;
 	currentTimeSeconds = 0;
 
-	speed = 60; //для начала будем так считать
+	speed = 60; //для начала будем так считать ?????
 
 	//22 декабря у нас зимнее солнцестояние - самая длинная ночь и самый короткий день.
 	// восход 22 декабря - 7:55
@@ -366,7 +385,7 @@ void world::draw(RenderWindow& window)
 	{
 		for (int j = 0; j < width; j++)
 		{
-			//код обработки строки карты: куча ёбаных ифов
+			//код обработки строки карты
 			if (TileMap[i][j] == ' ')
 				//трава
 				mapSpr.setTextureRect(IntRect(32, 0, 16, 16));
@@ -427,6 +446,12 @@ void world::draw(RenderWindow& window)
 			if (TileMap[i][j] == '.')
 				//угол правый нижний
 				mapSpr.setTextureRect(IntRect(112, 32, 16, 16));
+			if (TileMap[i][j] == 'T')
+				//дерево
+				mapSpr.setTextureRect(IntRect(32, 32, 16, 16));
+			if (TileMap[i][j] == 'B')
+				//куст
+				mapSpr.setTextureRect(IntRect(16, 32, 16, 16));
 
 			mapSpr.setPosition(j * 16, i * 16);
 			window.draw(mapSpr);
@@ -531,6 +556,18 @@ void world::displayInfo()
 	if (currentTimeMinutes < 10)
 		printf("0");
 	printf("%d", currentTimeMinutes);
+	cout << "\n";
+
+	cout << tileset.toAnsiString() << "\n";
+
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			cout << TileMap[i][j].toAnsiString();
+		}
+		cout << "\n";
+	}
 }
 
 //функция не будет использована в рамках выполнения дипломной работы
@@ -763,11 +800,10 @@ void world::generateSimpleMap()
 		TileMap[height - 2][i] = 'd';
 	}
 
-	//водоёмы
-
-	//деревья
-
-	//камни
+	//нарисовать водоёмы
+	//makeWater();
+	////распределить объекты
+	//distributeObjects();
 
 
 }
@@ -790,6 +826,7 @@ void world::distributeObjects()
 		//клетка более не считается доступной
 		validCells.erase(validCells.begin() + randNum);
 		//позиция выбрана, остаётся разместить
+		TileMap[tmp.y][tmp.x] = 'r';
 	}
 	//кусты
 	for (int i = 0; i < bushesCount; i++)
@@ -799,6 +836,7 @@ void world::distributeObjects()
 		//клетка более не считается доступной
 		validCells.erase(validCells.begin() + randNum);
 		//позиция выбрана, остаётся разместить
+		TileMap[tmp.y][tmp.x] = 'B';
 	}
 	//деревья
 	for (int i = 0; i < treesCount; i++)
@@ -808,6 +846,7 @@ void world::distributeObjects()
 		//клетка более не считается доступной
 		validCells.erase(validCells.begin() + randNum);
 		//позиция выбрана, остаётся разместить
+		TileMap[tmp.y][tmp.x] = 'T';
 	}
 }
 

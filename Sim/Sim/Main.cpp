@@ -11,38 +11,38 @@ using namespace sf;
 int main()
 {
 	//UI::drawStartWindow();
-	UI::drawLoadWindow();
-	UI::drawSaveWindow();
+	//UI::drawLoadWindow();
+	//UI::drawSaveWindow();
 
 	View view(FloatRect(200, 200, 300, 200));
 	RenderWindow window(sf::VideoMode(1024, 768), "GETTING STARTED");
 	view.reset(sf::FloatRect(0, 0, 640, 480));
 	Clock clock;
-	String levelString[height][width];
-	
-	//наполнить левел хламом
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < width; j++)
-		{	
-			levelString[i][j] = ' ';
-		}
-	}
-	for (int i = 0; i < width; i++)
-	{
-		levelString[0][i] = '-';
-		levelString[height - 1][i] = '-';
-	}
-	for (int i = 0; i < height; i++)
-	{
-		levelString[i][0] = 'i';
-		levelString[i][width - 1] = 'i';
-	}
+	//String levelString[height][width];
+	//
+	////наполнить левел хламом
+	//for (int i = 0; i < height; i++)
+	//{
+	//	for (int j = 0; j < width; j++)
+	//	{	
+	//		levelString[i][j] = ' ';
+	//	}
+	//}
+	//for (int i = 0; i < width; i++)
+	//{
+	//	levelString[0][i] = '-';
+	//	levelString[height - 1][i] = '-';
+	//}
+	//for (int i = 0; i < height; i++)
+	//{
+	//	levelString[i][0] = 'i';
+	//	levelString[i][width - 1] = 'i';
+	//}
 
 
-	String path1 = "Images/tileset2.png";
+	//String path1 = "Images/tileset2.png";
 
-	world level(path1);
+	world level;
 
 	while (window.isOpen())
 	{
