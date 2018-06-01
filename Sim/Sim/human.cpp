@@ -62,7 +62,7 @@ human::human()
 	//направление движения в начале
 	dir = rand() % 4;
 
-	respawnTimer = rand() % 30000 + 5000; //в тиках?
+	
 
 }
 
@@ -70,6 +70,7 @@ void human::generateDeathDate()
 {
 	//генерирует предполагаемую дату смерти человека, по факту +-
 }
+
 
 void human::generateName()
 {

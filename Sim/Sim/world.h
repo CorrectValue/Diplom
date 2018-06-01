@@ -20,6 +20,8 @@ class world
 
 public:
 
+
+
 	String tileset;
 
 	int curTimeOfDay; //текущее время суток в строковом формате - смотри enum
@@ -97,6 +99,10 @@ public:
 	void world::makePreGenMap();
 	
 	void generateMap(); //процедурная генерация карты
+
+	//геттеры
+	int getHeight();
+	int getWidth();
 };
 
 #endif

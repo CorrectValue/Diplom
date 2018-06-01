@@ -867,43 +867,66 @@ void world::makeWater()
 		TileMap[waterCenterY][waterCenterX] = 'v'; //клетка в центре
 		waterSize--;
 		int dr, pm, currentX, currentY;
+		currentX = waterCenterX;
+		currentY = waterCenterY;
 		while (waterSize > 0)
 		{
 			dr = rand() % 1; //направление движения Х или Y
 			pm = rand() % 1; // плюс или минус
 			//это хрень
-			//switch (dr)
-			//{
-			//case 0:
-			//	//координата меняется по X
-			//	switch (pm)
-			//	{
-			//	case 0:
-			//		//в положительную сторону
-			//		if (TileMap[currentY][currentX] == ' ')
-			//		{
-
-			//		}
-			//		break;
-			//	case 1:
-			//		//в отрицательную сторону
-			//		break;	
-			//	}
-			//	break;
-			//case 1:
-			//	//координата меняется по Y
-			//	switch (pm)
-			//	{
-			//	case 0:
-			//		//в положительную сторону
-			//		break;
-			//	case 1:
-			//		//в отрицательную сторону
-			//		break;
-			//	}
-			//	break;
-			//}
-			waterSize--;
+			//или нет? ещё не тестил
+			switch (dr)
+			{
+			case 0:
+				//координата меняется по X
+				switch (pm)
+				{
+				case 0:
+					//в положительную сторону
+					if (TileMap[currentY][currentX + 1] == ' ')
+					{
+						currentX++;
+						TileMap[currentY][currentX] = 'v';
+						waterSize--;
+					}
+					break;
+				case 1:
+					//в отрицательную сторону
+					if (TileMap[currentY][currentX - 1] == ' ')
+					{
+						currentX--;
+						TileMap[currentY][currentX] = 'v';
+						waterSize--;
+					}
+					break;	
+				}
+				break;
+			case 1:
+				//координата меняется по Y
+				switch (pm)
+				{
+				case 0:
+					//в положительную сторону
+					if (TileMap[currentY + 1][currentX] == ' ')
+					{
+						currentY++;
+						TileMap[currentY][currentX] = 'v';
+						waterSize--;
+					}
+					break;
+				case 1:
+					//в отрицательную сторону
+					if (TileMap[currentY - 1][currentX] == ' ')
+					{
+						currentY--;
+						TileMap[currentY][currentX] = 'v';
+						waterSize--;
+					}
+					break;
+				}
+				break;
+			}
+			
 		}
 	}
 
@@ -923,4 +946,14 @@ void world::prepareValidCellsList()
 			}
 		}
 	}
+}
+
+int world::getHeight()
+{
+	return height;
+}
+
+int world::getWidth()
+{
+	return width;
 }
