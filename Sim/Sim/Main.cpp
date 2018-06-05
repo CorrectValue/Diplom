@@ -2,6 +2,7 @@
 
 #include <conio.h>
 #include "world.h"
+#include "human.h"
 #include "UI.h"
 
 using namespace sf;
@@ -18,31 +19,17 @@ int main()
 	RenderWindow window(sf::VideoMode(1024, 768), "GETTING STARTED");
 	view.reset(sf::FloatRect(0, 0, 640, 480));
 	Clock clock;
-	//String levelString[height][width];
-	//
-	////наполнить левел хламом
-	//for (int i = 0; i < height; i++)
-	//{
-	//	for (int j = 0; j < width; j++)
-	//	{	
-	//		levelString[i][j] = ' ';
-	//	}
-	//}
-	//for (int i = 0; i < width; i++)
-	//{
-	//	levelString[0][i] = '-';
-	//	levelString[height - 1][i] = '-';
-	//}
-	//for (int i = 0; i < height; i++)
-	//{
-	//	levelString[i][0] = 'i';
-	//	levelString[i][width - 1] = 'i';
-	//}
-
-
-	//String path1 = "Images/tileset2.png";
-
 	world level;
+	//задать вектора существ
+	vector<human> people;
+	int peopleCount = 10;
+
+	//набить этот вектор ровно необходимым количеством людей
+	for (int i = 0; i < peopleCount; i++)
+	{
+		human tmp;
+		people.insert(people.end(), tmp);
+	}
 
 	while (window.isOpen())
 	{

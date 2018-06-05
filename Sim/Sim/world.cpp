@@ -136,15 +136,17 @@ world::world()
 {
 	//конструктор по умолчанию 
 	//установить прочие важные и не очень данные
+	//srand(time(0));
 	//первое января первого года! Зима!
+	//пока так, чуть позже будем получать из гуи
 	year = 1;
 	month = Jan;
 	day = 1;
 	dayOfWeek = Mon;
 	season = Winter;
-	//установить тайлсет для карты
-	tileset = "Images/map-winter.png";
-	/*switch (season)
+
+	//tileset = "Images/map-winter.png";
+	switch (season)
 	{
 	case Winter:
 		tileset = "Images/map-winter.png";
@@ -158,7 +160,7 @@ world::world()
 	case Fall:
 		tileset = "Images/map-summer.png";
 		break;
-	}*/
+	}
 
 	generateSimpleMap();
 	//makePreGenMap();
@@ -170,6 +172,9 @@ world::world()
 	mapSpr.setTexture(mapTex);
 
 	minutePassed = false;
+
+
+	//установить тайлсет для карты
 
 
 	//
@@ -279,6 +284,11 @@ world::world()
 		blueAlphaColor = stepRiseSetAlpha * (minutesPastMidnight - MinutesRiseTime);
 	}
 
+	//набить мир
+	makeWater();
+	prepareValidCellsList();
+	distributeObjects();
+
 }
 
 void world::envManipulation(RenderWindow& window)
@@ -339,6 +349,7 @@ void world::envManipulation(RenderWindow& window)
 		blueAlphaColor = 0;
 	}
 	overlayBlue.setFillColor(Color(0, 0, 55, blueAlphaColor)); 
+	overlayGray.setFillColor(Color(128, 128, 128, grayAlphaColor));
 	//overlayYellow.setFillColor(Color(255, 232, 75, yellowAlphaColor));
 	window.draw(overlayBlue);
 	//window.draw(overlayYellow);
@@ -558,16 +569,16 @@ void world::displayInfo()
 	printf("%d", currentTimeMinutes);
 	cout << "\n";
 
-	cout << tileset.toAnsiString() << "\n";
+	//cout << tileset.toAnsiString() << "\n";
 
-	for (int i = 0; i < height; i++)
-	{
-		for (int j = 0; j < width; j++)
-		{
-			cout << TileMap[i][j].toAnsiString();
-		}
-		cout << "\n";
-	}
+	//for (int i = 0; i < height; i++)
+	//{
+	//	for (int j = 0; j < width; j++)
+	//	{
+	//		cout << TileMap[i][j].toAnsiString();
+	//	}
+	//	cout << "\n";
+	//}
 }
 
 //функция не будет использована в рамках выполнения дипломной работы
@@ -814,9 +825,9 @@ void world::distributeObjects()
 	//это камень, куст, дерево
 	//сгенерировать число камней, кустов, деревьев
 	int rocksCount, bushesCount, treesCount, randNum;
-	rocksCount = rand() % (width*height/9) + 1; //девятая часть карты должна быть занята камнями
-	bushesCount = rand() % (width*height / 7) + 1; //кустов должно быть побольше, т.к. с них жители берут ягоды
-	treesCount = rand() % (width*height / 5) + 1; //деревьев должно быть ещё больше, т.к. это не только еда, но и древесина
+	rocksCount = rand() % (width*height/100) + 1; //девятая часть карты должна быть занята камнями
+	bushesCount = rand() % (width*height / 100) + 1; //кустов должно быть побольше, т.к. с них жители берут ягоды
+	treesCount = rand() % (width*height / 100) + 1; //деревьев должно быть ещё больше, т.к. это не только еда, но и древесина
 	//ну и разместить
 	//камни
 	for (int i = 0; i < rocksCount; i++)
@@ -941,7 +952,7 @@ void world::prepareValidCellsList()
 		{
 			if (TileMap[j][i] == ' ')
 			{
-				cell temp = { j, i };
+				cell temp = { i, j };
 				validCells.insert(validCells.end(), temp);
 			}
 		}
