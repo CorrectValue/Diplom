@@ -47,9 +47,9 @@ human::human()
 	//далее подготовить внешний вид
 	//случайный выбор внешнего вида
 	if (gender == male)
-		tileset = "Images/CreatureTilesets/Human/Male" + maleAppearances[rand() % maleAppearances.size()];
+		tileset = "Images/CreatureTilesets/Human/Male/" + maleAppearances[rand() % maleAppearances.size()] + ".png";
 	else
-		tileset = "Images/CreatureTilesets/Human/Female" + femaleAppearances[rand() % femaleAppearances.size()];
+		tileset = "Images/CreatureTilesets/Human/Female/" + femaleAppearances[rand() % femaleAppearances.size()] + ".png";
 	//загрузка внешнего вида из файла
 	image.loadFromFile(tileset);
 	texture.loadFromImage(image);
@@ -62,7 +62,12 @@ human::human()
 	//направление движения в начале
 	dir = rand() % 4;
 
-	
+	cell tmp = validCells[rand() % validCells.size()];
+	x = tmp.x;
+	y = tmp.y;
+	w = 16;
+	h = 16;
+	sprite.setPosition(x*w, y*h);
 
 }
 

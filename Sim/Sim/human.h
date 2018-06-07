@@ -10,7 +10,7 @@ class human : public Creature
 {
 private:
 	static int globalID; //статичный общий id, от которого считаются все айди объектов
-
+	const int meanLifeTime = 70;
 public:
 	//навыки - то, что отличает человека от животного
 	int strength; //1 - дохляк, 10 - атлант
@@ -21,6 +21,9 @@ public:
 	int id; //идентификатор
 
 	int gender; //пол
+
+	//щас будет чорная магия
+	bool hasWeapon;
 
 
 	

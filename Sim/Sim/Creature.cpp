@@ -4,17 +4,13 @@
 int Creature::globalID = 0;
 vector<cell> Creature::validCells;
 
+//оставленные здесь методы справедливы для всех наследников. Вроде.
 Creature::Creature()
 {
-	//получить id
-	id = globalID;
-	//увеличить глобальный ид
-	globalID++;
-
-
+	
 }
 
-void Creature::update(float time)
+void Creature::update(float time, world &wrld)
 {
 	//обновляет состояние существа в каждом тике
 	//если существо живо:
@@ -50,6 +46,12 @@ void Creature::update(float time)
 		default:
 			break;
 		}
+		//прирастить координату
+		if (x + dx*time < wrld.getWidth() * 16 && x + dx*time > 0)
+			x += dx*time;
+		if (y + dy*time < wrld.getHeight() * 16 && y + dy*time > 0)
+			y += dy*time;
+		sprite.setPosition(x*w, y*h);
 	}
 	else
 	{
@@ -71,6 +73,7 @@ void Creature::respawn()
 	x = tmp.x;
 	y = tmp.y;
 	//вроде всё?
+	sprite.setPosition(x*w, y*h);
 }
 
 void Creature::die()
@@ -155,3 +158,38 @@ void Creature::mapInteraction(world wrld)
 		}
 	}
 }
+
+//void Creature::operator=(const Creature &other)
+//{
+//	x = other.x;
+//	y = other.x;
+//	age = other.age;
+//	estLifeTime = other.estLifeTime;
+//
+//	satiety = other.satiety;
+//	thirst = other.thirst;
+//	stamina = other.stamina;
+//	hp = other.hp;
+//
+//	w = other.w;
+//	h = other.h;
+//
+//	alive = other.alive;
+//	id = other.id;
+//	dir = other.dir;
+//	speed = other.speed;
+//	runningSpeed = other.runningSpeed;
+//	running = other.running;
+//	tileset = other.tileset;
+//	image.loadFromFile(tileset);
+//	texture.loadFromImage(image);
+//	sprite.setTexture(texture);
+//	sprite.setTextureRect(IntRect(0, 0, w, h));
+//	/*image = other.image;
+//	texture = other.texture;
+//	sprite = other.sprite;*/
+//	
+//	respawnPause = other.respawnPause;
+//	currentPause = other.currentPause;
+//
+//}

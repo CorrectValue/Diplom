@@ -1,59 +1,25 @@
-﻿Build started 05.06.2018 21:39:24.
+﻿Build started 07.06.2018 20:27:51.
      1>Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\include" /I"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
          Main.cpp
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(37): warning C4244: 'initializing' : conversion from 'sf::Int64' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(54): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(56): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(58): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(62): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(64): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(66): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\xutility(2600): error C2582: 'operator =' function is unavailable in 'human'
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xutility(2623) : see reference to function template instantiation 'void std::_Fill<_Iter,_Ty>(_FwdIt,_FwdIt,const _Ty &)' being compiled
-                 with
-                 [
-                     _Iter=human *
-         ,            _Ty=human
-         ,            _FwdIt=human *
-                 ]
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\vector(1726) : see reference to function template instantiation 'void std::fill<human*,human>(_FwdIt,_FwdIt,const _Ty &)' being compiled
-                 with
-                 [
-                     _FwdIt=human *
-         ,            _Ty=human
-                 ]
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\vector(1653) : while compiling class template member function 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<human>>> std::vector<human,std::allocator<_Ty>>::_Insert_n(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<human>>>,unsigned int,const human &)'
-                 with
-                 [
-                     _Ty=human
-                 ]
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\vector(1328) : see reference to function template instantiation 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<human>>> std::vector<human,std::allocator<_Ty>>::_Insert_n(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<human>>>,unsigned int,const human &)' being compiled
-                 with
-                 [
-                     _Ty=human
-                 ]
-                 c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(24) : see reference to class template instantiation 'std::vector<human,std::allocator<_Ty>>' being compiled
-                 with
-                 [
-                     _Ty=human
-                 ]
-     1>c:\program files (x86)\microsoft visual studio 12.0\vc\include\xutility(2346): error C2582: 'operator =' function is unavailable in 'human'
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\xutility(2367) : see reference to function template instantiation '_BidIt2 std::_Copy_backward<_BidIt1,_BidIt2>(_BidIt1,_BidIt1,_BidIt2,std::_Nonscalar_ptr_iterator_tag)' being compiled
-                 with
-                 [
-                     _BidIt2=human *
-         ,            _BidIt1=human *
-                 ]
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\vector(1738) : see reference to function template instantiation '_BidIt2 std::_Copy_backward<human*,human*>(_BidIt1,_BidIt1,_BidIt2)' being compiled
-                 with
-                 [
-                     _BidIt2=human *
-         ,            _BidIt1=human *
-                 ]
-     1>Done Building Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" (Build target(s)) -- FAILED.
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(42): warning C4244: 'initializing' : conversion from 'sf::Int64' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(59): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(61): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(63): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(67): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(69): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\main.cpp(71): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\lib" /LIBPATH:"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" "tgui-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.lib" /MACHINE:X86 Debug\animal.obj
+         Debug\Creature.obj
+         Debug\human.obj
+         Debug\Main.obj
+         Debug\UI.obj
+         Debug\world.obj
+         Sim.vcxproj -> C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.exe
+     1>Done Building Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.88
+Time Elapsed 00:00:01.42

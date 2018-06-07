@@ -1,5 +1,6 @@
 #include "world.h"
 #include <iostream>
+#include <sstream>
 
 vector<cell> world::validCells;
 
@@ -143,7 +144,7 @@ world::world()
 	month = Jan;
 	day = 1;
 	dayOfWeek = Mon;
-	season = Winter;
+	season = Summer;
 
 	//tileset = "Images/map-winter.png";
 	switch (season)
@@ -967,4 +968,104 @@ int world::getHeight()
 int world::getWidth()
 {
 	return width;
+}
+
+String world::getWorldData()
+{
+	//выдаёт строку с основной информацией о мире
+	std::stringstream ss;
+	string str;
+	
+	switch (dayOfWeek)
+	{
+	case Mon:
+		ss<<"Mon";
+		break;
+	case Tue:
+		ss<<"Tue";
+		break;
+	case Wed:
+		ss<<"Wed";
+		break;
+	case Thu:
+		ss<<"Thu";
+		break;
+	case Fri:
+		ss<<"Fri";
+		break;
+	case Sat:
+		ss<<"Sat";
+		break;
+	case Sun:
+		ss<<"Sun";
+		break;
+	}
+	ss << ", " << day << " ";
+	switch (month)
+	{
+	case Jan:
+		ss<<"Jan ";
+		break;
+	case Feb:
+		ss<<"Feb ";
+		break;
+	case Mar:
+		ss<<"Mar ";
+		break;
+	case Apr:
+		ss<<"Apr ";
+		break;
+	case May:
+		ss<<"May ";
+		break;
+	case Jun:
+		ss<<"Jun ";
+		break;
+	case Jul:
+		ss<<"Jul ";
+		break;
+	case Aug:
+		ss<<"Aug ";
+		break;
+	case Sep:
+		ss<<"Sep ";
+		break;
+	case Oct:
+		ss<<"Oct ";
+		break;
+	case Nov:
+		ss<<"Nov ";
+		break;
+	case Dec:
+		ss<<"Dec ";
+		break;
+	}
+	ss << year;
+	ss << ".\nThe weather is ";
+	switch (curWeather)
+	{
+	case clear:
+		ss<<"clear.";
+		break;
+	case fallout:
+		ss<<"fallout.";
+		break;
+	case storm:
+		ss<<"storm.";
+		break;
+	case cloudy:
+		ss<<"cloudy.";
+		break;
+	case gray:
+		ss<<"gray.";
+		break;
+	}
+	ss << "\n";
+	ss << currentTimeHours << ":";
+	if (currentTimeMinutes < 10)
+		ss << "0";
+	ss << currentTimeMinutes;
+	ss >> str;
+	String Str(str);
+	return Str;
 }

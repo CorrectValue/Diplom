@@ -71,6 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="animal.cpp" />
     <ClCompile Include="Creature.cpp" />
     <ClCompile Include="human.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="world.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animal.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Creature.h" />
     <ClInclude Include="enums.h" />

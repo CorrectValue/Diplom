@@ -4,6 +4,7 @@
 #include "world.h"
 #include "human.h"
 #include "UI.h"
+#include "Animal.h"
 
 using namespace sf;
 
@@ -21,22 +22,26 @@ int main()
 	Clock clock;
 	world level;
 	//задать вектора существ
+	vector<animal> animals;
 	vector<human> people;
+	animal::prepareValidCellsList(level);
+	human::prepareValidCellsList(level);
+	human::prepareAppearances();
+	human::prepareNames();
+	int animalsCount = 10;
 	int peopleCount = 10;
-
+	
 	//набить этот вектор ровно необходимым количеством людей
-	for (int i = 0; i < peopleCount; i++)
-	{
-		human tmp;
-		people.insert(people.end(), tmp);
-	}
+	animals.resize(animalsCount);
+	people.resize(peopleCount);
+	
 
 	while (window.isOpen())
 	{
 
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
-		time = time / 1000; //было 800, не понравится - вернём
+		time = time / 800; //было 800, не понравится - вернём
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -65,11 +70,20 @@ int main()
 		{
 			view.move(0, 0.2 * time);
 		}
-
 		window.setView(view);
 		window.clear();
 		level.timeManipulation(time);
 		level.draw(window);
+		//обработать
+		for (int i = 0; i < animalsCount; i++)
+		{
+			animals[i].update(time, level); //левел передаётся теперь по ссылке, всё быстро и норм
+			window.draw(animals[i].sprite);
+		}
+		//for (int i = 0; i < peopleCount; i++)
+		//{
+		//	window.draw(people[i].sprite);
+		//}
 		level.envManipulation(window);
 		level.displayInfo();
 		window.display();

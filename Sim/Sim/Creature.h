@@ -15,12 +15,10 @@ public:
 	
 	static vector<cell> validCells; //доступные для респауна клетки
 
-	const int meanLifeTime = 13; //среднее время жизни конкретного типа существ в годах
-	
 	float x, y, w, h, dx, dy, speed, runningSpeed;
 	int dir; //направление движения
 	Image image;//сфмл изображение
-	Texture texture;//сфмл текстура
+	sf::Texture texture;//сфмл текстура
 	Sprite sprite;//сфмл спрайт
 	String tileset; //строка, в которой лежит тайлсет
 	int id;
@@ -40,14 +38,14 @@ public:
 
 	bool running; //бежит ли существо
 
-	
-	
 	Creature(); 
-	void update(float time);
+	void update(float time, world &wrld);
 	void respawn();
 	void die(); //смерть существа по естественным или не очень естественным причинам
 	static void prepareValidCellsList(world wrld); //подготовить список клеток, в которые можно респауниться
 	void mapInteraction(world wrld);
+
+	//void operator=(const Creature &other);
 };
 
 

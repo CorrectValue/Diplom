@@ -100,6 +100,8 @@ public:
 	
 	void generateMap(); //процедурная генерация карты
 
+	String getWorldData(); //выдаёт основные данные о мире
+
 	//геттеры
 	int getHeight();
 	int getWidth();
