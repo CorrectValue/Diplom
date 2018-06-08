@@ -1,24 +1,10 @@
 #include "UI.h"
 
-//UI::UI(int type)
-//{
-//	//конструктор окна: на вход подаётся конкретный тип окна
-//	//затем обрабатывается, строится нужное окно
-//	//возможно, это нахуй не нужно, но ещё не точно
-//	switch (type)
-//	{
-//	case startWindow:
-//		break;
-//	case mainWindow:
-//		break;
-//	case saveWindow:
-//		break;
-//	case loadWindow:
-//		break; 
-//	default:
-//		break;
-//	}
-//}
+int UI::count;
+int UI::hours;
+int UI::minutes;
+int UI::season;
+int UI::weather;
 
 void UI::drawStartWindow()
 {
@@ -76,7 +62,7 @@ void UI::drawStartWindow()
 	cmbSeason->setSize(150, 35);
 	cmbSeason->setPosition(30, 225);
 	cmbSeason->addItem("Summer");
-	cmbSeason->addItem("Autumn");
+	cmbSeason->addItem("Fall");
 	cmbSeason->addItem("Winter");
 	cmbSeason->addItem("Spring");
 	cmbSeason->setSelectedItem("Summer");
@@ -85,10 +71,10 @@ void UI::drawStartWindow()
 	ComboBox::Ptr cmbWeather = ComboBox::create();
 	cmbWeather->setSize(150, 35);
 	cmbWeather->setPosition(280, 225);
-	cmbWeather->addItem("Clear");
-	cmbWeather->addItem("Cloudy");
-	cmbWeather->addItem("Storm");
 	cmbWeather->addItem("Fallout");
+	cmbWeather->addItem("Cloudy");
+	cmbWeather->addItem("Clear");
+	cmbWeather->addItem("Storm");
 	cmbWeather->addItem("Gray");
 	cmbWeather->setSelectedItem("Clear");
 	gui.add(cmbWeather);
@@ -145,6 +131,9 @@ void UI::drawStartWindow()
 	btnLoad->setSize(150, 50);
 	btnLoad->setText("Load");
 	gui.add(btnLoad);
+
+	btnCreate->connect("pressed", getData, std::ref(editBoxCount), std::ref(cmbSeason), std::ref(cmbWeather), std::ref(editBoxHours), std::ref(editBoxMinutes), std::ref(startWindow));
+	btnRandom->connect("pressed", makeRandom, std::ref(startWindow));
 
 	while (startWindow.isOpen())
 	{
@@ -285,7 +274,94 @@ void UI::drawSaveWindow()
 	}
 }
 
-void UI::drawMainWindow()
+void UI::drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<human> &humans)
 {
 	//описывает главное окно программы
+	//в существующее главное окно программы выводятся нужные виджоты
+	//в правой части окна будут виджеты
+	Gui gui(window);
+	auto back = tgui::Picture::create({ "Images/UI/red-leather.jpg", { 0, 0, 300, 768} });
+	back->setPosition({ 724, 0 });
+	gui.add(back);
+
+	auto creatureslabel = Label::create("Creatures");
+	creatureslabel->setPosition(730, 100);
+	creatureslabel->setHorizontalAlignment(Label::HorizontalAlignment::Right);
+	creatureslabel->setTextColor(sf::Color(252, 211, 27));
+	creatureslabel->setTextSize(30);
+	gui.add(creatureslabel);
+
+	auto creaturesBox = ChatBox::create();
+	creaturesBox->setSize(288, 150);
+	creaturesBox->setTextSize(20);
+	creaturesBox->setPosition(730, 150);
+	gui.add(creaturesBox);
+
+	auto peoplelabel = Label::create("People");
+	peoplelabel->setPosition(730, 300);
+	peoplelabel->setHorizontalAlignment(Label::HorizontalAlignment::Right);
+	peoplelabel->setTextColor(sf::Color(252, 211, 27));
+	peoplelabel->setTextSize(30);
+	gui.add(peoplelabel);
+
+	auto peopleBox = ChatBox::create();
+	peopleBox->setSize(288, 400);
+	peopleBox->setTextSize(20);
+	peopleBox->setPosition(730, 350);
+	gui.add(peopleBox);
+
+	auto backbtn = Button::create();
+	backbtn->setPosition(899, 25);
+	backbtn->setSize(50, 50);
+	backbtn->setText("Back");
+	gui.add(backbtn);
+
+	auto savebtn = Button::create();
+	savebtn->setPosition(799, 25);
+	savebtn->setSize(50, 50);
+	savebtn->setText("Save");
+	gui.add(savebtn);
+
+	gui.draw();
+}
+
+void UI::getData(EditBox::Ptr &ebCount, ComboBox::Ptr &cbSeason, ComboBox::Ptr &cbWeather, EditBox::Ptr &ebHours, EditBox::Ptr &ebMinutes, RenderWindow &window)
+{
+	//получает данные из стартового окна
+	//получить данные из едитбоксов
+	String countStr, hoursStr, minutesStr; //поскольку из виджетов можно вытащить только строку
+	countStr = ebCount->getText();
+	hoursStr = ebHours->getText();
+	minutesStr = ebMinutes->getText();
+	//вытащить инты из строк
+	std::string cstr = countStr.toAnsiString();
+	std::string hstr = hoursStr.toAnsiString();
+	std::string mstr = minutesStr.toAnsiString();
+	std::istringstream issc(cstr);
+	std::istringstream issh(hstr);
+	std::istringstream issm(mstr);
+	issc >> UI::count;
+	issh >> UI::hours;
+	issm >> UI::minutes;
+
+	//получить данные из комбобоксов
+	season = cbSeason->getSelectedItemIndex();
+	weather = cbWeather->getSelectedItemIndex();
+
+	//закрыть окно - как?
+	window.close();
+
+}
+
+void UI::makeRandom(RenderWindow &window)
+{
+	//задаёт случайные стартовые параметры
+	season = rand() % 4;
+	weather = rand() % 5;
+	count = rand() % 190 + 10;
+	hours = rand() % 24;
+	minutes = rand() % 60;
+	//закрыть окно
+	window.close();
+
 }

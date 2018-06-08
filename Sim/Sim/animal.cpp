@@ -49,3 +49,34 @@ animal::animal()
 	sprite.setPosition(x*w, y*h);
 }
 
+void animal::die()
+{
+	//существо умирает. такова жизнь.
+	alive = false;
+	respawnPause = rand() % 3000 + 1000; //в тиках?
+	currentPause = respawnPause; //текущее время до респавна равно сгенерированному
+}
+
+void animal::respawn()
+{
+	//когда истекает пауза респавна, существо возрождается в случайной клетке карты
+	//сгенерировать точку для респауна
+	cell tmp = validCells[rand() % validCells.size()];
+	x = tmp.x;
+	y = tmp.y;
+	//вроде всё?
+	sprite.setPosition(x*w, y*h);
+}
+
+String animal::getAnimalData()
+{
+	//какие данные нужно выводить в виджет?
+	std::stringstream ss;
+	string str;
+
+	ss << id << " hp=" << hp << " st=" << stamina << "x=" << x << " y=" << y;
+
+	ss >> str;
+	String Str(str);
+	return Str;
+}

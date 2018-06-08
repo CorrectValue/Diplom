@@ -133,33 +133,35 @@ void world::changeWeather()
 
 }
 
-world::world()
+world::world(int Season, int Weather, int Hours, int Minutes)
 {
 	//конструктор по умолчанию 
 	//установить прочие важные и не очень данные
-	//srand(time(0));
-	//первое €нвар€ первого года! «има!
-	//пока так, чуть позже будем получать из гуи
+	
 	year = 1;
-	month = Jan;
+	//month = Jan;
 	day = 1;
 	dayOfWeek = Mon;
-	season = Summer;
+	season = Season;
 
 	//tileset = "Images/map-winter.png";
 	switch (season)
 	{
 	case Winter:
 		tileset = "Images/map-winter.png";
+		month = Jan;
 		break;
 	case Summer:
 		tileset = "Images/map-summer.png";
+		month = Jul;
 		break;
 	case Spring:
 		tileset = "Images/map-summer.png";
+		month = Apr;
 		break;
 	case Fall:
 		tileset = "Images/map-summer.png";
+		month = Oct;
 		break;
 	}
 
@@ -179,10 +181,10 @@ world::world()
 
 
 	//
-	curWeather = clear;
+	curWeather = Weather;
 	//времечко шесть утра 
-	currentTimeHours = 12;
-	currentTimeMinutes = 0;
+	currentTimeHours = Hours;
+	currentTimeMinutes = Minutes;
 	currentTimeSeconds = 0;
 
 	speed = 60; //дл€ начала будем так считать ?????

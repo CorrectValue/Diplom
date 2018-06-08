@@ -17,50 +17,7 @@ human::human()
 	//увеличить глобальный ид
 	globalID++;
 
-	//выбрать пол человека
-	gender = rand() % 2;
-	
-	//сгенерировать имя
-	generateName();
-
-	//приготовить статы персонажа
-	//случайное число от 1 до 10
-	intelligence = 1 + rand() % 10;
-	strength = 1 + rand() % 10;
-	endurance = 1 + rand() % 10;
-
-	//хп и стамина рассчитываются, исходя из
-	stamina = endurance * 87.5 + strength * 53.5; // ну просто формулка
-	hp = endurance * 75 + strength * 60;
-
-	//голод и жажда - по умолчанию в самом начале человек сыт и не мучим жаждой
-	satiety = 100;
-	thirst = 100;
-
-	//возраст
-	//в дефолтном конструкторе мы делаем человека случайного возраста, для рождения нового человека будет отдельная функция
-	age = rand() % meanLifeTime; //изначально возраст человека от 0 лет до среднего
-
-	//подготовить дату смерти человека, не вечно же жить
-	generateDeathDate();
-
-	//далее подготовить внешний вид
-	//случайный выбор внешнего вида
-	if (gender == male)
-		tileset = "Images/CreatureTilesets/Human/Male/" + maleAppearances[rand() % maleAppearances.size()] + ".png";
-	else
-		tileset = "Images/CreatureTilesets/Human/Female/" + femaleAppearances[rand() % femaleAppearances.size()] + ".png";
-	//загрузка внешнего вида из файла
-	image.loadFromFile(tileset);
-	texture.loadFromImage(image);
-	sprite.setTexture(texture);
-	sprite.setTextureRect(IntRect(0, 0, 16, 16));
-
-	//параметры для движения
-	speed = 0.2; //скорость ходьбы фиксированно равна 0,2
-	runningSpeed = 0.2 + agility / 2 * 33 / 200; //скорость бега выше
-	//направление движения в начале
-	dir = rand() % 4;
+	generateNewHuman();
 
 	cell tmp = validCells[rand() % validCells.size()];
 	x = tmp.x;
@@ -71,10 +28,7 @@ human::human()
 
 }
 
-void human::generateDeathDate()
-{
-	//генерирует предполагаемую дату смерти человека, по факту +-
-}
+
 
 
 void human::generateName()
@@ -261,4 +215,82 @@ void human::prepareAppearances()
 		"female07",
 		"female08"
 	};
+}
+
+void human::die() //перегрузить
+{
+	//добавить выбор мёртвого тайлсета
+	tileset = "Images/CreatureTilesets/Human/dead.png";
+	alive = false;
+	//дописать респавн
+	respawnPause = rand() % 30000 + 10000; //в тиках?
+	currentPause = respawnPause; //текущее время до респавна равно сгенерированному
+}
+
+void human::respawn()
+{
+	//когда истекает пауза респавна, человек возрождается там же, где и умер, но это уже другой человек
+	//генерируем нового человека на месте старого: координаты остаются прежние
+	generateNewHuman();
+
+	//вроде всё?
+	sprite.setPosition(x*w, y*h);
+}
+
+void human::generateNewHuman()
+{
+	//вынесено в отдельный метод во избежание дублирования кода
+	//выбрать пол человека
+	gender = rand() % 2;
+
+	//сгенерировать имя
+	generateName();
+
+	//приготовить статы персонажа
+	//случайное число от 1 до 10
+	intelligence = 1 + rand() % 10;
+	strength = 1 + rand() % 10;
+	endurance = 1 + rand() % 10;
+
+	//хп и стамина рассчитываются, исходя из
+	stamina = endurance * 87.5 + strength * 53.5; // ну просто формулка
+	hp = endurance * 75 + strength * 60;
+
+	//голод и жажда - по умолчанию в самом начале человек сыт и не мучим жаждой
+	satiety = 100;
+	thirst = 100;
+
+	//возраст
+	//ожидаемое время жизни
+	estLifeTime = meanLifeTime / 2 + rand() % meanLifeTime;
+
+	age = rand() % estLifeTime; //изначально возраст человека от 0 лет до ожидаемого, чтобы не было противоречий
+
+	//подготовить дату смерти человека, не вечно же жить
+	generateDeathDate();
+
+	//далее подготовить внешний вид
+	//случайный выбор внешнего вида
+	if (gender == male)
+		tileset = "Images/CreatureTilesets/Human/Male/" + maleAppearances[rand() % maleAppearances.size()] + ".png";
+	else
+		tileset = "Images/CreatureTilesets/Human/Female/" + femaleAppearances[rand() % femaleAppearances.size()] + ".png";
+	//загрузка внешнего вида из файла
+	image.loadFromFile(tileset);
+	texture.loadFromImage(image);
+	sprite.setTexture(texture);
+	sprite.setTextureRect(IntRect(0, 0, 16, 16));
+
+	//параметры для движения
+	speed = 0.2; //скорость ходьбы фиксированно равна 0,2
+	runningSpeed = 0.2 + agility / 2 * 33 / 200; //скорость бега выше
+	//направление движения в начале
+	dir = rand() % 4;
+
+
+}
+
+void human::checkDeathDate()
+{
+	//проверка, уж не пора ли помереть
 }

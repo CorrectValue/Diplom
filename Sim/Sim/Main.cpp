@@ -12,7 +12,7 @@ using namespace sf;
 
 int main()
 {
-	//UI::drawStartWindow();
+	UI::drawStartWindow();
 	//UI::drawLoadWindow();
 	//UI::drawSaveWindow();
 
@@ -20,7 +20,9 @@ int main()
 	RenderWindow window(sf::VideoMode(1024, 768), "GETTING STARTED");
 	view.reset(sf::FloatRect(0, 0, 640, 480));
 	Clock clock;
-	world level;
+	//мир теперь создаётся не абы какой, а параметризированный!
+	//из стартового окна вынимается сезон, время и погода
+	world level(UI::season, UI::weather, UI::hours, UI::minutes);
 	//задать вектора существ
 	vector<animal> animals;
 	vector<human> people;
@@ -28,8 +30,8 @@ int main()
 	human::prepareValidCellsList(level);
 	human::prepareAppearances();
 	human::prepareNames();
-	int animalsCount = 10;
-	int peopleCount = 10;
+	int animalsCount = UI::count / 4;
+	int peopleCount = UI::count;
 	
 	//набить этот вектор ровно необходимым количеством людей
 	animals.resize(animalsCount);
@@ -86,6 +88,7 @@ int main()
 		//}
 		level.envManipulation(window);
 		level.displayInfo();
+		UI::drawMainWindow(window, animals, people);
 		window.display();
 	}
 

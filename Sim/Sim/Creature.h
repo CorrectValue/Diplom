@@ -44,6 +44,8 @@ public:
 	void die(); //смерть существа по естественным или не очень естественным причинам
 	static void prepareValidCellsList(world wrld); //подготовить список клеток, в которые можно респауниться
 	void mapInteraction(world wrld);
+	void checkDeathDate();
+	void generateDeathDate();//генерирует день смерти персонажа
 
 	//void operator=(const Creature &other);
 };

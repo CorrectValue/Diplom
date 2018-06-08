@@ -81,7 +81,7 @@ public:
 
 
 	void draw(RenderWindow& window);
-	world();
+	world(int Season, int Weather, int Hours, int Minutes);
 
 	void timeManipulation(float time); //для всей смены времени: прирост секунд, минут, дней, годов и так далее
 	void weatherManipulation(); //манипуляция погодой

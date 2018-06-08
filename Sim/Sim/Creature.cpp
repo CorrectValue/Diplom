@@ -65,25 +65,6 @@ void Creature::update(float time, world &wrld)
 	}
 }
 
-void Creature::respawn()
-{
-	//когда истекает пауза респавна, существо возрождается в случайной клетке карты
-	//сгенерировать точку для респауна
-	cell tmp = validCells[rand() % validCells.size()];
-	x = tmp.x;
-	y = tmp.y;
-	//вроде всё?
-	sprite.setPosition(x*w, y*h);
-}
-
-void Creature::die()
-{
-	//существо умирает. такова жизнь.
-	alive = false;
-	respawnPause = rand() % 3000 + 1000; //в тиках?
-	currentPause = respawnPause; //текущее время до респавна равно сгенерированному
-}
-
 void Creature::prepareValidCellsList(world wrld)
 {
 	//пробегаем все клетки 
@@ -193,3 +174,15 @@ void Creature::mapInteraction(world wrld)
 //	currentPause = other.currentPause;
 //
 //}
+
+void Creature::generateDeathDate()
+{
+	//есть текущий возраст, есть предполагаемое время жизни
+	int diff = estLifeTime - age; //сколько лет осталось до смерти
+
+}
+
+void Creature::respawn()
+{
+
+}

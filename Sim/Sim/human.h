@@ -38,10 +38,16 @@ public:
 
 	
 	void generateName(); //генерирует имя персонажа
-	void generateDeathDate();//генерирует день смерти персонажа
+
 	static void prepareNames();//единовременно готовит список имён и фамилий
 	static void prepareAppearances(); //единожды готовит списки обликов
-
+	using Creature::die;
+	void die();
+	using Creature::respawn;
+	void respawn();
+	void generateNewHuman();
+	using Creature::checkDeathDate;
+	void checkDeathDate();
 
 	human();
 
