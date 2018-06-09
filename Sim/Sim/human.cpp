@@ -8,6 +8,8 @@ vector<String> human::femaleNames;
 vector<String> human::lastNames;
 vector<String> human::maleAppearances;
 vector<String> human::femaleAppearances;
+vector<goal> human::availibleGoals;
+vector<cell> human::houses;
 int human::globalID = 0;
 
 human::human()
@@ -16,6 +18,8 @@ human::human()
 	id = globalID;
 	//увеличить глобальный ид
 	globalID++;
+
+	home = houses[id]; //присваивается человеку дом на карте по его айди
 
 	generateNewHuman();
 
@@ -28,17 +32,12 @@ human::human()
 
 }
 
-
-
-
 void human::generateName()
 {
 	//сгенерировать имя человека
 	name = (gender == male) ? maleNames[rand() % maleNames.size()] : femaleNames[rand() % femaleNames.size()]; //мужчинам - мужские имена, женщинам - женские, рабочим - заводы, крестьянам - поля
 	lastName = lastNames[rand() % lastNames.size()]; //фамилии генерируются
 }
-
-
 
 void human::prepareNames()
 {
@@ -284,6 +283,7 @@ void human::generateNewHuman()
 	//параметры для движения
 	speed = 0.2; //скорость ходьбы фиксированно равна 0,2
 	runningSpeed = 0.2 + agility / 2 * 33 / 200; //скорость бега выше
+	currentSpeed = 0;
 	//направление движения в начале
 	dir = rand() % 4;
 
@@ -293,4 +293,135 @@ void human::generateNewHuman()
 void human::checkDeathDate()
 {
 	//проверка, уж не пора ли помереть
+}
+
+void human::goalPlanner()
+{
+	//осуществляет планирование целей
+	//проверить состояние существа и на основе этого выбрать новую цель
+	if (satiety < 20) //если голод
+	{
+		//голод, нужно найти пищу
+		//только если приоритет выше, чем у текущей цели
+		if (availibleGoals[Eat].priority > currentGoal.priority)
+			currentGoal = availibleGoals[Eat]; //цель - поесть
+	}
+	else if (thirst < 20) //если жажда
+	{
+		//новая цель - поиск питья, но только если приоритет выше
+		if (availibleGoals[Drink].priority > currentGoal.priority)
+			currentGoal = availibleGoals[Drink]; //цель - поиск питья
+	}
+	else if (stamina < 5) //если запас сил существенно снижен
+	{
+		//утомление, нужно отдохнуть
+		if (availibleGoals[Rest].priority > currentGoal.priority)
+			currentGoal = availibleGoals[Rest];
+	}
+	else if ()//если время ночное (22:00 - 6:00)
+	{
+		//время ночное, пора баиньки
+		if (availibleGoals[Sleep].priority > currentGoal.priority)
+			currentGoal = availibleGoals[Sleep];
+	}
+	else if () //погода - осадки или буря
+	{
+		//погодные условия плохие, надо прятаться
+		if (availibleGoals[Hide].priority > currentGoal.priority)
+			currentGoal = availibleGoals[Hide];
+	}
+	else if () //получаем люлей
+	{
+		//надо убегать
+		//поскольку приоритет у сваливания наибольший, даже чекать не надо
+		currentGoal = availibleGoals[Run];
+	}
+	else
+	{
+		//никаких предпосылок что-либо делать нет, ленимся
+		currentGoal = availibleGoals[Idle];
+	}
+
+
+
+}
+
+void human::prepareAvailibleGoals()
+{
+	//подготавливает список достижимых целей
+	//для человека цели могут быть:
+	//питание
+	//питьё
+	//сон
+	//лень
+	//отдых
+	//побег
+	//прятки
+	//порядок очень важен внутри вектора, очень, правда
+	goal slp = { Sleep, 2 };
+	goal et = { Eat, 3 };
+	goal drk = { Drink, 5 };
+	goal idl = { Idle, 0 };
+	goal rst = { Rest, 1 };
+	goal rn = { Run, 7 };
+	goal hd = { Hide, 6 };
+	
+	availibleGoals = {
+		slp,
+		et,
+		drk,
+		rn,
+		idl,
+		hd,
+		rst
+	};
+}
+
+void human::prepareHouses(world &wrld)
+{
+	//подготавливает список домиков на карте
+	for (int i = 0; i < wrld.getHeight(); i++)
+	{
+		for (int j = 0; j < wrld.getWidth(); j++)
+		{
+			if (wrld.TileMap[i][j] == 'H')
+			{
+				//подходящая клетка
+				cell temp = { j, i };
+				houses.insert(houses.end(), temp);
+			}
+		}
+	}
+}
+
+void human::actionPlanner()
+{
+	//планировщик действий для достижения цели
+	switch (currentGoal.Goal)
+	{
+	case Run:
+		//в случае сваливания генерируется рандомная точка
+		//и мувту в неё
+		break;
+	case Sleep:
+		//для сна нужно добраться домой
+		moveTo(home.x, home.y);
+		break;
+	case Eat:
+		//тут либо поиск пищи, либо, если она есть, поглощение
+		break;
+	case Drink:
+		//опять же, есть вода - пьём, нет вода - ищем
+		break;
+	case Idle:
+		//ленивое состояние - либо стоим на месте, либо ходим из угла в угол
+		break;
+	case Rest:
+		//всё просто, прям где стояли - там и остаёмся
+		break;
+	case Hide:
+		//бежим домой
+		moveTo(home.x, home.y);
+		break; 
+	}
 }

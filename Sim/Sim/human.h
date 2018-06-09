@@ -10,6 +10,8 @@ class human : public Creature
 {
 private:
 	static int globalID; //статичный общий id, от которого считаются все айди объектов
+	static vector<goal> availibleGoals; //доступные конкретному существу цели
+	static vector<cell> houses; //дома на карте
 	const int meanLifeTime = 70;
 public:
 	//навыки - то, что отличает человека от животного
@@ -25,7 +27,7 @@ public:
 	//щас будет чорная магия
 	bool hasWeapon;
 
-
+	cell home; //домашняя клетка
 	
 	String name;
 	String lastName;
@@ -41,6 +43,7 @@ public:
 
 	static void prepareNames();//единовременно готовит список имён и фамилий
 	static void prepareAppearances(); //единожды готовит списки обликов
+	static void prepareHouses(world &wrld);
 	using Creature::die;
 	void die();
 	using Creature::respawn;
@@ -48,6 +51,10 @@ public:
 	void generateNewHuman();
 	using Creature::checkDeathDate;
 	void checkDeathDate();
+	using Creature::goalPlanner;
+	void goalPlanner();
+	void prepareAvailibleGoals();
+	void actionPlanner();
 
 	human();
 

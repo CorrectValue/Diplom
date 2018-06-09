@@ -81,7 +81,7 @@ public:
 
 
 	void draw(RenderWindow& window);
-	world(int Season, int Weather, int Hours, int Minutes);
+	world(int Season, int Weather, int Hours, int Minutes, int Count);
 
 	void timeManipulation(float time); //дл€ всей смены времени: прирост секунд, минут, дней, годов и так далее
 	void weatherManipulation(); //манипул€ци€ погодой
@@ -90,7 +90,7 @@ public:
 	void update(RenderWindow& window, float time);
 	void displayInfo(); //выводит информацию о текущем положении вещей
 	int placeNineBlock(int x, int y, char c); //генерирует блок 3х3 клетки заданных символов
-	void distributeObjects(); //распредел€ет объекты по игровой карте
+	void distributeObjects(int Count); //распредел€ет объекты по игровой карте
 	void makeWater(); //случайно добавл€ет на карту водоЄмы
 	void prepareValidCellsList(); //подготавливает список доступных клеток дл€ спавна
 

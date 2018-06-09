@@ -133,7 +133,7 @@ void world::changeWeather()
 
 }
 
-world::world(int Season, int Weather, int Hours, int Minutes)
+world::world(int Season, int Weather, int Hours, int Minutes, int Count)
 {
 	//конструктор по умолчанию 
 	//установить прочие важные и не очень данные
@@ -290,7 +290,7 @@ world::world(int Season, int Weather, int Hours, int Minutes)
 	//набить мир
 	makeWater();
 	prepareValidCellsList();
-	distributeObjects();
+	distributeObjects(Count);
 
 }
 
@@ -466,6 +466,9 @@ void world::draw(RenderWindow& window)
 			if (TileMap[i][j] == 'B')
 				//куст
 				mapSpr.setTextureRect(IntRect(16, 32, 16, 16));
+			if (TileMap[i][j] == 'H')
+				//дом
+				mapSpr.setTextureRect(IntRect(48, 32, 16, 16));
 
 			mapSpr.setPosition(j * 16, i * 16);
 			window.draw(mapSpr);
@@ -822,7 +825,7 @@ void world::generateSimpleMap()
 
 }
 
-void world::distributeObjects()
+void world::distributeObjects(int Count)
 {
 	//нужно сгенерировать кучу различных типов объектов
 	//это камень, куст, дерево
@@ -861,6 +864,16 @@ void world::distributeObjects()
 		validCells.erase(validCells.begin() + randNum);
 		//позиция выбрана, остаётся разместить
 		TileMap[tmp.y][tmp.x] = 'T';
+	}
+	//дома
+	for (int i = 0; i < Count; i++)
+	{
+		randNum = rand() % validCells.size();
+		cell tmp = validCells[randNum];
+		//клетка более не считается доступной
+		validCells.erase(validCells.begin() + randNum);
+		//позиция выбрана, остаётся разместить
+		TileMap[tmp.y][tmp.x] = 'H';
 	}
 }
 

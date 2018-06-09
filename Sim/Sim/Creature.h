@@ -15,7 +15,7 @@ public:
 	
 	static vector<cell> validCells; //доступные для респауна клетки
 
-	float x, y, w, h, dx, dy, speed, runningSpeed;
+	float x, y, w, h, dx, dy, currentSpeed, speed, runningSpeed;
 	int dir; //направление движения
 	Image image;//сфмл изображение
 	sf::Texture texture;//сфмл текстура
@@ -23,6 +23,8 @@ public:
 	String tileset; //строка, в которой лежит тайлсет
 	int id;
 	bool alive; //живо ли существо
+
+	goal currentGoal; //текущая цель
 
 	float respawnPause; //для респауна существ, причём респаун людей идёт медленнее
 	float currentPause; //текущее время до респавна существа
@@ -46,6 +48,9 @@ public:
 	void mapInteraction(world wrld);
 	void checkDeathDate();
 	void generateDeathDate();//генерирует день смерти персонажа
+	void goalPlanner(); //планировщик целей
+	void moveTo(int X, int Y);
+	void searchFor(String map);
 
 	//void operator=(const Creature &other);
 };

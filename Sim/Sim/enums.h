@@ -107,6 +107,23 @@ struct cell
 	int y;
 };
 
+enum goals
+{
+	Sleep = 0,	//поспать
+	Eat,		//поесть
+	Drink,		//пить
+	Run,		//убегать
+	Idle,		//лень, фактическое отсутствие цели
+	Hide,		//прятаться от дождя или бури
+	Rest		//отдых
+};
+
+struct goal
+{
+	int Goal;
+	int priority;
+};
+
 //enum items
 //{};
 

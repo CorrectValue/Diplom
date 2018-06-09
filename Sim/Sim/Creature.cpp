@@ -22,25 +22,25 @@ void Creature::update(float time, world &wrld)
 		case down:
 			//вниз
 			sprite.setTextureRect(IntRect(0, 0, 16, 16));//повернуть перса по направлению движения
-			dy = running ? runningSpeed : speed;
+			dy = currentSpeed;
 			dx = 0;
 			break;
 		case up:
 			//вверх
 			sprite.setTextureRect(IntRect(0, 17, 16, 16));
-			dy = running ? -runningSpeed : -speed;
+			dy = - currentSpeed;
 			dx = 0;
 			break;
 		case dleft:
 			//влево
 			sprite.setTextureRect(IntRect(17, 17, 16, 16));
-			dx = running ? -runningSpeed : -speed;
+			dx = - currentSpeed;
 			dy = 0;
 			break;
 		case dright:
 			//вправо
 			sprite.setTextureRect(IntRect(17, 0, 16, 16));
-			dx = running ? runningSpeed : speed;
+			dx = currentSpeed;
 			dy = 0;
 			break;
 		default:
@@ -185,4 +185,50 @@ void Creature::generateDeathDate()
 void Creature::respawn()
 {
 
+}
+
+void Creature::goalPlanner()
+{
+
+}
+
+void Creature::moveTo(int X, int Y)
+{
+	//метод передвижения в заданную точку карты
+	//сравнить координаты текущие и требуемые
+	int diffX, diffY; //разница координат по осям Х и Y соответственно
+	diffX = x - X; //текущие минус требуемые
+	diffY = y - Y;
+	//сначала выравниваем координату Х
+	if (diffX > 0)
+	{
+		//текущая координата больше требуемой
+		dir = dleft; //идём влево
+	}
+	else
+	{
+		//текущая координата меньше требуемой
+		dir = dright;
+	}
+	if (diffX == 0)
+	{
+		//по иксу выровнялись, выравниваем игрек
+		if (diffY > 0)
+		{
+			//находимся выше цели
+			dir = down;
+		}
+		else
+		{
+			//находимся ниже
+			dir = up;
+		}
+	}
+}
+
+void Creature::searchFor(String map)
+{
+	//поиск чего-либо
+	//в режиме поиска существо не знает, где ему искать то, что нужно
+	//поэтому выбирается случайная клетка карты
 }

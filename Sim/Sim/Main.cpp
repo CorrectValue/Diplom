@@ -22,7 +22,7 @@ int main()
 	Clock clock;
 	//мир теперь создаётся не абы какой, а параметризированный!
 	//из стартового окна вынимается сезон, время и погода
-	world level(UI::season, UI::weather, UI::hours, UI::minutes);
+	world level(UI::season, UI::weather, UI::hours, UI::minutes, UI::count);
 	//задать вектора существ
 	vector<animal> animals;
 	vector<human> people;
