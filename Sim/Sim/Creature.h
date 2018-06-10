@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "enums.h"
 #include "world.h"
+#include <sstream>
 
 using namespace sf;
 using namespace std;
@@ -31,24 +32,25 @@ public:
 
 	float satiety; //сытость, здесь 100 - сыт, 0 - голоден
 	float thirst; //обратно жажде, 100 - всё ок, 0 - помирает от жажды
-	float stamina; //запас сил, 100 - хоть отбавляй, 0 - пал без сил
-	float hp; //здоровье, здесь 100 - здоров как бык, 0 - мёртв
+	float maxStamina, curStamina; //запас сил, 100 - хоть отбавляй, 0 - пал без сил
+	float maxHp, curHp; //здоровье, здесь 100 - здоров как бык, 0 - мёртв
 
 	
 	int estLifeTime; //предполагаемое время жизни. По истечении - смерть.
 	int age; //текущий возраст существа
 
 	bool running; //бежит ли существо
+	bool tookDamage; //получен урон от другого существа
 
 	Creature(); 
 	void update(float time, world &wrld);
 	void respawn();
 	void die(); //смерть существа по естественным или не очень естественным причинам
-	static void prepareValidCellsList(world wrld); //подготовить список клеток, в которые можно респауниться
+	static void prepareValidCellsList(world &wrld); //подготовить список клеток, в которые можно респауниться
 	void mapInteraction(world wrld);
 	void checkDeathDate();
 	void generateDeathDate();//генерирует день смерти персонажа
-	void goalPlanner(); //планировщик целей
+	void goalPlanner(int &time, int &weather); //планировщик целей
 	void moveTo(int X, int Y);
 	void searchFor(String map);
 

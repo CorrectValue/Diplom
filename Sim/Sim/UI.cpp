@@ -274,7 +274,7 @@ void UI::drawSaveWindow()
 	}
 }
 
-void UI::drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<human> &humans)
+void UI::drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<human> &humans, world &wrld)
 {
 	//описывает главное окно программы
 	//в существующее главное окно программы выводятся нужные виджоты
@@ -285,7 +285,7 @@ void UI::drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<hu
 	gui.add(back);
 
 	auto creatureslabel = Label::create("Creatures");
-	creatureslabel->setPosition(730, 100);
+	creatureslabel->setPosition(730, 115);
 	creatureslabel->setHorizontalAlignment(Label::HorizontalAlignment::Right);
 	creatureslabel->setTextColor(sf::Color(252, 211, 27));
 	creatureslabel->setTextSize(30);
@@ -298,7 +298,7 @@ void UI::drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<hu
 	gui.add(creaturesBox);
 
 	auto peoplelabel = Label::create("People");
-	peoplelabel->setPosition(730, 300);
+	peoplelabel->setPosition(730, 315);
 	peoplelabel->setHorizontalAlignment(Label::HorizontalAlignment::Right);
 	peoplelabel->setTextColor(sf::Color(252, 211, 27));
 	peoplelabel->setTextSize(30);
@@ -310,17 +310,39 @@ void UI::drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<hu
 	peopleBox->setPosition(730, 350);
 	gui.add(peopleBox);
 
+	auto worldBox = ChatBox::create();
+	worldBox->setSize(220, 80);
+	worldBox->setTextSize(20);
+	worldBox->setPosition(730, 5);
+	gui.add(worldBox);
+
 	auto backbtn = Button::create();
-	backbtn->setPosition(899, 25);
+	backbtn->setPosition(970, 60);
 	backbtn->setSize(50, 50);
 	backbtn->setText("Back");
 	gui.add(backbtn);
 
 	auto savebtn = Button::create();
-	savebtn->setPosition(799, 25);
+	savebtn->setPosition(970, 5);
 	savebtn->setSize(50, 50);
 	savebtn->setText("Save");
 	gui.add(savebtn);
+
+	//обновить информацию о мире и агентах в виджетах
+	//информация о животных и людях
+	for (int i = 0; i < animals.size(); i++)
+	{
+		creaturesBox->addLine(animals[i].getAnimalData(), sf::Color(252, 211, 27));
+	}
+
+	for (int i = 0; i < humans.size(); i++)
+	{
+		peopleBox->addLine(humans[i].getHumanData(), sf::Color(252, 211, 27));
+	}
+	//информация о мире
+	worldBox->addLine(wrld.getDateData(), sf::Color(252, 211, 27));
+	worldBox->addLine(wrld.getTimeData(), sf::Color(252, 211, 27));
+	worldBox->addLine(wrld.getWeatherData(), sf::Color(252, 211, 27));
 
 	gui.draw();
 }

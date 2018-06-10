@@ -3,7 +3,7 @@
 #include "Creature.h"
 #include <vector>
 #include <stdio.h>
-#include <sstream>
+
 //класс человека - наследует класс существа
 using namespace std;
 using namespace sf;
@@ -21,8 +21,8 @@ public:
 	void respawn();
 	String getAnimalData(); //возвращает строку данных о животном
 	using Creature::goalPlanner;
-	void goalPlanner();
-	void prepareAvailibleGoals();
+	void goalPlanner(int &time, int &weather);
+	static void prepareAvailibleGoals();
 	void actionPlanner();
 };
 

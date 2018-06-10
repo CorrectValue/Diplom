@@ -28,7 +28,7 @@ public:
 	//загрузка стартового окна
 	static void drawStartWindow();
 	//загрузка главного окна
-	static void drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<human> &humans);
+	static void drawMainWindow(RenderWindow &window, vector<animal> &animals, vector<human> &humans, world &wrld);
 	//загрузка окна загрузки
 	static void drawLoadWindow();
 	//загрузка окна сохранения

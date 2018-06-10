@@ -27,9 +27,14 @@ int main()
 	vector<animal> animals;
 	vector<human> people;
 	animal::prepareValidCellsList(level);
+	animal::prepareAvailibleGoals();
+//	human::prepareAvailibleGoals();
 	human::prepareValidCellsList(level);
 	human::prepareAppearances();
 	human::prepareNames();
+	human::prepareAvailibleActions();
+	human::prepareHouses(level);
+
 	int animalsCount = UI::count / 4;
 	int peopleCount = UI::count;
 	
@@ -86,9 +91,10 @@ int main()
 		//{
 		//	window.draw(people[i].sprite);
 		//}
+		level.weatherManipulation();
 		level.envManipulation(window);
 		level.displayInfo();
-		UI::drawMainWindow(window, animals, people);
+		UI::drawMainWindow(window, animals, people, level);
 		window.display();
 	}
 

@@ -9,9 +9,15 @@ using namespace sf;
 class human : public Creature
 {
 private:
-	static int globalID; //статичный общий id, от которого считаются все айди объектов
-	static vector<goal> availibleGoals; //доступные конкретному существу цели
-	static vector<cell> houses; //дома на карте
+	static int globalID;						//статичный общий id, от которого считаются все айди объектов
+	static vector<goal> availibleGoals;			//доступные конкретному существу цели
+	static vector<cell> houses;					//дома на карте
+	static vector<String> maleNames;			//доступные для мужчин имена 
+	static vector<String> femaleNames;			//доступные для женщин имена
+	static vector<String> lastNames;			//доступные фамилии
+	static vector<String> maleAppearances;		//вектор тайлсетов для персонажей, обликов мужчин
+	static vector<String> femaleAppearances;	// для женщин
+	static vector<action> availibleActions;		//список действий
 	const int meanLifeTime = 70;
 public:
 	//навыки - то, что отличает человека от животного
@@ -31,19 +37,12 @@ public:
 	
 	String name;
 	String lastName;
-	
-	static vector<String> maleNames; //доступные для мужчин имена 
-	static vector<String> femaleNames; //доступные для женщин имена
-	static vector<String> lastNames; //доступные фамилии
-	static vector<String> maleAppearances; //вектор тайлсетов для персонажей, обликов мужчин
-	static vector<String> femaleAppearances; // для женщин
-
-	
+		
 	void generateName(); //генерирует имя персонажа
-
 	static void prepareNames();//единовременно готовит список имён и фамилий
 	static void prepareAppearances(); //единожды готовит списки обликов
 	static void prepareHouses(world &wrld);
+	static void prepareAvailibleActions(); //готовит список действий
 	using Creature::die;
 	void die();
 	using Creature::respawn;
@@ -52,9 +51,10 @@ public:
 	using Creature::checkDeathDate;
 	void checkDeathDate();
 	using Creature::goalPlanner;
-	void goalPlanner();
-	void prepareAvailibleGoals();
+	void goalPlanner(int &time, int &weather);
+	static void prepareAvailibleGoals();
 	void actionPlanner();
+	String getHumanData();
 
 	human();
 

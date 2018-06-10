@@ -124,6 +124,24 @@ struct goal
 	int priority;
 };
 
+struct action
+{
+	int precondition;	//предусловие для действия будет сравниваться с результатом предыдущего
+	int Action;			//непосредственно действие
+	int result;			//результат действия
+};
+
+enum actions
+{
+	//перебор экшонов
+};
+
+enum conditions
+{
+	//пред- и постусловия
+
+};
+
 //enum items
 //{};
 

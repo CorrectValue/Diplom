@@ -17,8 +17,10 @@ animal::animal()
 	//задать основные параметры
 	satiety = 100;
 	thirst = 100;
-	stamina = 100;
-	hp = 100;
+	maxStamina = 100;
+	maxHp = 100;
+	curStamina = 100;
+	curHp = 100;
 
 	w = 16;
 	h = 16;
@@ -76,17 +78,21 @@ String animal::getAnimalData()
 	std::stringstream ss;
 	string str;
 
-	ss << id << " hp=" << hp << " st=" << stamina << "x=" << x << " y=" << y;
+	ss << id << "_hp=" << curHp << "/" << maxHp << "_st=" << curStamina << "/" << maxStamina << "_x=" << x << "_y=" << y;
 
 	ss >> str;
 	String Str(str);
 	return Str;
 }
 
-void animal::goalPlanner()
+void animal::goalPlanner(int &time, int &weather)
 {
 	//осуществляет планирование целей
 	//проверить состояние существа и на основе этого выбрать новую цель
+	//если никаких предпосылок что-либо делать нет, ленимся
+	// далее, если есть что-то важнее, цель просто переопределится
+	currentGoal = availibleGoals[Idle];
+
 	if (satiety < 20)
 	{
 		//голод, нужно найти пищу
@@ -94,26 +100,30 @@ void animal::goalPlanner()
 		if (availibleGoals[Eat].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Eat]; //цель - поесть
 	}
-	else if (thirst < 20)
+	if (thirst < 20)
 	{
 		//новая цель - поиск питья, но только если приоритет выше
 		if (availibleGoals[Drink].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Drink]; //цель - поиск питья
 	}
-	else if (stamina < 5) //или время позднее уже
+	if (curStamina < 5 || (time > 20 || time < 7)) //или время позднее уже
 	{
 		//утомление, нужно поспать
 		if (availibleGoals[Sleep].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Sleep];
 	}
-	else
+	if (weather == fallout || weather == storm) //погода - осадки или буря
 	{
-		//никаких предпосылок что-либо делать нет, ленимся
-		currentGoal = availibleGoals[Idle];
+		//погодные условия плохие, надо прятаться
+		if (availibleGoals[Hide].priority > currentGoal.priority)
+			currentGoal = availibleGoals[Hide];
 	}
-
-	//условие убегания при атаке
-
+	if (tookDamage) //получаем люлей
+	{
+		//надо убегать
+		//поскольку приоритет у сваливания наибольший, даже чекать не надо
+		currentGoal = availibleGoals[Run];
+	}
 }
 
 void animal::prepareAvailibleGoals()
@@ -162,5 +172,3 @@ void animal::actionPlanner()
 		break;
 	}
 }
-
-

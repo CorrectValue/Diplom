@@ -16,6 +16,8 @@ void Creature::update(float time, world &wrld)
 	//если существо живо:
 	if (alive)
 	{
+		//определить цель существования
+		goalPlanner(wrld.currentTimeHours, wrld.curWeather);
 		//движение:
 		switch (dir)
 		{
@@ -51,6 +53,36 @@ void Creature::update(float time, world &wrld)
 			x += dx*time;
 		if (y + dy*time < wrld.getHeight() * 16 && y + dy*time > 0)
 			y += dy*time;
+
+		//пересчитать показатели здоровья, стамины, жажды и голода
+		//голод и жажда
+		if (satiety > 0)
+			satiety -= 0.1; //пока фиксированно так: расход сытости постоянен и ни от чего не зависит
+		if (thirst > 0)
+			thirst -= (wrld.season == Winter) ? 0.1 : 0.3; //летом расход жидкости выше, чем зимой
+		//расход стамины зависит от того, насколько интенсивно двигается существо
+		//curStamina -= currentSpeed > 0 ? running ? 0.5 : 0.2 : -0.1; //тернарный оператор в тернарном операторе? почему бы и нет
+		if (currentSpeed > 0)
+		{
+			if (running)
+				curStamina -= 0.5;
+			else
+				curStamina -= 0.2;
+		}
+		else
+			if (curStamina < maxStamina) //если не двигаемся, но запас сил не полон, регеним его
+				curStamina += 0.1;
+		//хп, если персонаж голоден или умирает от жажды, тратится
+		if (satiety == 0 || thirst == 0)
+			curHp -= 0.1;
+		else
+			if (curHp < maxHp)
+				curHp += 0.1;
+		if (curHp <= 0)
+		{
+			//YOU DIED
+			die();
+		}
 		sprite.setPosition(x*w, y*h);
 	}
 	else
@@ -65,7 +97,7 @@ void Creature::update(float time, world &wrld)
 	}
 }
 
-void Creature::prepareValidCellsList(world wrld)
+void Creature::prepareValidCellsList(world &wrld)
 {
 	//пробегаем все клетки 
 	//уже ПОСЛЕ генерации объектов на карте, что значит, что клеток будет меньше и их придётся искать заново
@@ -187,7 +219,7 @@ void Creature::respawn()
 
 }
 
-void Creature::goalPlanner()
+void Creature::goalPlanner(int &time, int &weather)
 {
 
 }
@@ -231,4 +263,9 @@ void Creature::searchFor(String map)
 	//поиск чего-либо
 	//в режиме поиска существо не знает, где ему искать то, что нужно
 	//поэтому выбирается случайная клетка карты
+}
+
+void Creature::die()
+{
+
 }

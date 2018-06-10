@@ -252,8 +252,10 @@ void human::generateNewHuman()
 	endurance = 1 + rand() % 10;
 
 	//хп и стамина рассчитываются, исходя из
-	stamina = endurance * 87.5 + strength * 53.5; // ну просто формулка
-	hp = endurance * 75 + strength * 60;
+	maxStamina = endurance * 87.5 + strength * 53.5; // ну просто формулка
+	curStamina = maxStamina;
+	maxHp = endurance * 75 + strength * 60;
+	curHp = maxHp;
 
 	//голод и жажда - по умолчанию в самом начале человек сыт и не мучим жаждой
 	satiety = 100;
@@ -295,10 +297,14 @@ void human::checkDeathDate()
 	//проверка, уж не пора ли помереть
 }
 
-void human::goalPlanner()
+void human::goalPlanner(int &time, int &weather)
 {
 	//осуществляет планирование целей
 	//проверить состояние существа и на основе этого выбрать новую цель
+	//если никаких предпосылок что-либо делать нет, ленимся
+	//если возникнут - цель переопределится
+	currentGoal = availibleGoals[Idle];
+
 	if (satiety < 20) //если голод
 	{
 		//голод, нужно найти пищу
@@ -306,44 +312,36 @@ void human::goalPlanner()
 		if (availibleGoals[Eat].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Eat]; //цель - поесть
 	}
-	else if (thirst < 20) //если жажда
+	if (thirst < 20) //если жажда
 	{
 		//новая цель - поиск питья, но только если приоритет выше
 		if (availibleGoals[Drink].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Drink]; //цель - поиск питья
 	}
-	else if (stamina < 5) //если запас сил существенно снижен
+	if (curStamina < 5) //если запас сил существенно снижен
 	{
 		//утомление, нужно отдохнуть
 		if (availibleGoals[Rest].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Rest];
 	}
-	else if ()//если время ночное (22:00 - 6:00)
+	if (time > 20 || time < 7)//если время ночное (20:00 - 7:00)
 	{
 		//время ночное, пора баиньки
 		if (availibleGoals[Sleep].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Sleep];
 	}
-	else if () //погода - осадки или буря
+	if (weather == fallout || weather == storm) //погода - осадки или буря
 	{
 		//погодные условия плохие, надо прятаться
 		if (availibleGoals[Hide].priority > currentGoal.priority)
 			currentGoal = availibleGoals[Hide];
 	}
-	else if () //получаем люлей
+	if (tookDamage) //получаем люлей
 	{
 		//надо убегать
 		//поскольку приоритет у сваливания наибольший, даже чекать не надо
 		currentGoal = availibleGoals[Run];
 	}
-	else
-	{
-		//никаких предпосылок что-либо делать нет, ленимся
-		currentGoal = availibleGoals[Idle];
-	}
-
-
-
 }
 
 void human::prepareAvailibleGoals()
@@ -424,4 +422,23 @@ void human::actionPlanner()
 		moveTo(home.x, home.y);
 		break; 
 	}
+}
+
+void human::prepareAvailibleActions()
+{
+	//готовит список доступных действий
+
+}
+
+String human::getHumanData()
+{
+	//возвращает строку с информацией о человеке
+	std::stringstream ss;
+	string str;
+
+	ss << id << "_" << name.toAnsiString() << "_" << lastName.toAnsiString() << "_hp=" << curHp << "/" << maxHp << "_st=" << curStamina << "/" << maxStamina << "_x=" << x << "_y=" << y;
+	
+	ss >> str;
+	String Str(str);
+	return Str;
 }

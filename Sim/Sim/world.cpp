@@ -13,13 +13,14 @@ void world::timeManipulation(float time)
 	currentTimeSeconds += time * speed; //СКОРОСТЬ ПОЧЕМУ-ТО НЕ РАБОТАЕТ
 
 	//время прошло - таймер погоды сбиваем
-	weatherTimer -= time * speed;
+	//weatherTimer -= time * speed;
 
 	//переброс на минуту
 	if (currentTimeSeconds > 59)
 	{
 		currentTimeMinutes += 1;
 		currentTimeSeconds -= 60;
+		weatherTimer -= 60;
 		minutePassed = true;
 	}
 
@@ -72,8 +73,6 @@ void world::timeManipulation(float time)
 		dayOfWeek = 1;
 
 	//переброс месяца
-
-	
 
 	//теперь вроде всё как надо
 	if (day > daysInMonth[month-1])
@@ -985,7 +984,7 @@ int world::getWidth()
 	return width;
 }
 
-String world::getWorldData()
+String world::getDateData()
 {
 	//выдаёт строку с основной информацией о мире
 	std::stringstream ss;
@@ -994,92 +993,112 @@ String world::getWorldData()
 	switch (dayOfWeek)
 	{
 	case Mon:
-		ss<<"Mon";
+		ss<<"Monday";
 		break;
 	case Tue:
-		ss<<"Tue";
+		ss<<"Tuesday";
 		break;
 	case Wed:
-		ss<<"Wed";
+		ss<<"Wednesday";
 		break;
 	case Thu:
-		ss<<"Thu";
+		ss<<"Thursday";
 		break;
 	case Fri:
-		ss<<"Fri";
+		ss<<"Friday";
 		break;
 	case Sat:
-		ss<<"Sat";
+		ss<<"Saturday";
 		break;
 	case Sun:
 		ss<<"Sun";
 		break;
 	}
-	ss << ", " << day << " ";
+	ss << ",_" << day << "/";
 	switch (month)
 	{
 	case Jan:
-		ss<<"Jan ";
+		ss<<"Jan/";
 		break;
 	case Feb:
-		ss<<"Feb ";
+		ss<<"Feb/";
 		break;
 	case Mar:
-		ss<<"Mar ";
+		ss<<"Mar/";
 		break;
 	case Apr:
-		ss<<"Apr ";
+		ss<<"Apr/";
 		break;
 	case May:
-		ss<<"May ";
+		ss<<"May/";
 		break;
 	case Jun:
-		ss<<"Jun ";
+		ss<<"Jun/";
 		break;
 	case Jul:
-		ss<<"Jul ";
+		ss<<"Jul/";
 		break;
 	case Aug:
-		ss<<"Aug ";
+		ss<<"Aug/";
 		break;
 	case Sep:
-		ss<<"Sep ";
+		ss<<"Sep/";
 		break;
 	case Oct:
-		ss<<"Oct ";
+		ss<<"Oct/";
 		break;
 	case Nov:
-		ss<<"Nov ";
+		ss<<"Nov/";
 		break;
 	case Dec:
-		ss<<"Dec ";
+		ss<<"Dec/";
 		break;
 	}
 	ss << year;
-	ss << ".\nThe weather is ";
-	switch (curWeather)
-	{
-	case clear:
-		ss<<"clear.";
-		break;
-	case fallout:
-		ss<<"fallout.";
-		break;
-	case storm:
-		ss<<"storm.";
-		break;
-	case cloudy:
-		ss<<"cloudy.";
-		break;
-	case gray:
-		ss<<"gray.";
-		break;
-	}
-	ss << "\n";
+	
+	ss >> str;
+	String Str(str);
+	return Str;
+}
+
+String world::getTimeData()
+{
+	std::stringstream ss;
+	string str;
 	ss << currentTimeHours << ":";
 	if (currentTimeMinutes < 10)
 		ss << "0";
 	ss << currentTimeMinutes;
+	ss >> str;
+	String Str(str);
+	return Str;
+}
+
+String world::getWeatherData()
+{
+	std::stringstream ss;
+	string str;
+	ss << "Weather:_";
+	switch (curWeather)
+	{
+	case clear:
+		ss << "clear.";
+		break;
+	case fallout:
+		ss << "fallout.";
+		break;
+	case storm:
+		ss << "storm.";
+		break;
+	case cloudy:
+		ss << "cloudy.";
+		break;
+	case gray:
+		ss << "gray.";
+		break;
+	}
+
+	
 	ss >> str;
 	String Str(str);
 	return Str;
