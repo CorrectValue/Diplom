@@ -4,9 +4,13 @@
 #include "enums.h"
 #include "world.h"
 #include <sstream>
+#include <iostream>
 
 using namespace sf;
 using namespace std;
+
+const int mapH = 48;
+const int mapW = 64;
 
 class Creature
 {
@@ -17,6 +21,7 @@ public:
 	static vector<cell> validCells; //доступные для респауна клетки
 
 	float x, y, w, h, dx, dy, currentSpeed, speed, runningSpeed;
+	int X, Y; //координаты в пространстве карты
 	int dir; //направление движения
 	Image image;//сфмл изображение
 	sf::Texture texture;//сфмл текстура
@@ -24,6 +29,10 @@ public:
 	String tileset; //строка, в которой лежит тайлсет
 	int id;
 	bool alive; //живо ли существо
+	bool sleeping; //спит или бодрствует
+
+	cell dest; //точка назначения движения
+
 
 	goal currentGoal; //текущая цель
 
@@ -41,6 +50,7 @@ public:
 
 	bool running; //бежит ли существо
 	bool tookDamage; //получен урон от другого существа
+	bool hidden; //спрятался
 
 	Creature(); 
 	void update(float time, world &wrld);
@@ -50,9 +60,13 @@ public:
 	void mapInteraction(world wrld);
 	void checkDeathDate();
 	void generateDeathDate();//генерирует день смерти персонажа
-	void goalPlanner(int &time, int &weather); //планировщик целей
+	virtual void goalPlanner(int &time, int &weather); //планировщик целей
+	virtual void actionPlanner(world &wrld);
 	void moveTo(int X, int Y);
-	void searchFor(String map);
+	void searchFor(String map[][mapW], int thing);
+
+	virtual void eat();
+	virtual void drink();
 
 	//void operator=(const Creature &other);
 };

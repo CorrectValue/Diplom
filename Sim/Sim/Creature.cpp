@@ -18,6 +18,12 @@ void Creature::update(float time, world &wrld)
 	{
 		//определить цель существования
 		goalPlanner(wrld.currentTimeHours, wrld.curWeather);
+		actionPlanner(wrld);
+		if (curStamina < 0)
+		{
+			curStamina = 0;
+			currentSpeed = 0;
+		}
 		//движение:
 		switch (dir)
 		{
@@ -48,20 +54,35 @@ void Creature::update(float time, world &wrld)
 		default:
 			break;
 		}
+		if (time > 10)
+			time = 10.0;
 		//прирастить координату
 		if (x + dx*time < wrld.getWidth() * 16 && x + dx*time > 0)
+		{
 			x += dx*time;
+			X = x / w;
+		}
 		if (y + dy*time < wrld.getHeight() * 16 && y + dy*time > 0)
+		{
 			y += dy*time;
+			Y = y / h;
+		}
+
+		mapInteraction(wrld);
 
 		//пересчитать показатели здоровья, стамины, жажды и голода
 		//голод и жажда
 		if (satiety > 0)
 			satiety -= 0.1; //пока фиксированно так: расход сытости постоянен и ни от чего не зависит
 		if (thirst > 0)
-			thirst -= (wrld.season == Winter) ? 0.1 : 0.3; //летом расход жидкости выше, чем зимой
+		{
+			if (sleeping)
+				thirst -= (wrld.season == Winter) ? 0.05 : 0.15; //летом расход жидкости выше, чем зимой
+			else
+				thirst -= (wrld.season == Winter) ? 0.1 : 0.3; //летом расход жидкости выше, чем зимой
+		}
 		//расход стамины зависит от того, насколько интенсивно двигается существо
-		//curStamina -= currentSpeed > 0 ? running ? 0.5 : 0.2 : -0.1; //тернарный оператор в тернарном операторе? почему бы и нет
+		
 		if (currentSpeed > 0)
 		{
 			if (running)
@@ -71,19 +92,28 @@ void Creature::update(float time, world &wrld)
 		}
 		else
 			if (curStamina < maxStamina) //если не двигаемся, но запас сил не полон, регеним его
-				curStamina += 0.1;
+				if (sleeping)
+					curStamina += 0.5; //во сне регенерация запаса сил существеннее
+				else
+					curStamina += 0.1;
 		//хп, если персонаж голоден или умирает от жажды, тратится
 		if (satiety == 0 || thirst == 0)
-			curHp -= 0.1;
+			if (sleeping)
+				curHp -= 0.05;
+			else
+				curHp -= 0.1;
 		else
 			if (curHp < maxHp)
-				curHp += 0.1;
+				if (sleeping)
+					curHp += 0.2;//во сне регенерация усиленнее
+				else
+					curHp += 0.1;
 		if (curHp <= 0)
 		{
 			//YOU DIED
 			die();
 		}
-		sprite.setPosition(x*w, y*h);
+		sprite.setPosition(x, y);
 	}
 	else
 	{
@@ -137,19 +167,13 @@ void Creature::mapInteraction(world wrld)
 				if (dx < 0)
 					x = j * 16 + 16;
 			}
-			if (wrld.TileMap[i][j] == 'B')//куст, наступать нельзя
+			if (wrld.TileMap[i][j] == 'B')//куст, можно спрятаться
 			{
-				if (dx > 0)
-					x = j * 16 - w;
-				if (dx < 0)
-					x = j * 16 + 16;
+				hidden = true;
 			}
-			if (wrld.TileMap[i][j] == 'T')//дерево, наступать нельзя
+			if (wrld.TileMap[i][j] == 'T')//дерево, под ним можно спрятаться
 			{
-				if (dx > 0)
-					x = j * 16 - w;
-				if (dx < 0)
-					x = j * 16 + 16;
+				hidden = true;
 			}
 			//пропасти: существо может случайно упасть в пропасть и погибнуть
 			if (wrld.TileMap[i][j] == '=')//пропасть верхняя, наступил - умер
@@ -221,51 +245,130 @@ void Creature::respawn()
 
 void Creature::goalPlanner(int &time, int &weather)
 {
+	
+}
+
+void Creature::actionPlanner(world &wrld)
+{
 
 }
 
-void Creature::moveTo(int X, int Y)
+void Creature::moveTo(int destX, int destY)
 {
 	//метод передвижения в заданную точку карты
 	//сравнить координаты текущие и требуемые
 	int diffX, diffY; //разница координат по осям Х и Y соответственно
-	diffX = x - X; //текущие минус требуемые
-	diffY = y - Y;
+	diffX = X - destX; //текущие минус требуемые
+	diffY = Y - destY;
+
+	currentSpeed = running ? runningSpeed : speed;
 	//сначала выравниваем координату Х
 	if (diffX > 0)
 	{
 		//текущая координата больше требуемой
 		dir = dleft; //идём влево
 	}
-	else
+	else if (diffX < 0)
 	{
 		//текущая координата меньше требуемой
 		dir = dright;
 	}
-	if (diffX == 0)
+	else if (diffX == 0)
 	{
 		//по иксу выровнялись, выравниваем игрек
 		if (diffY > 0)
 		{
 			//находимся выше цели
-			dir = down;
+			dir = up;
 		}
 		else
 		{
 			//находимся ниже
-			dir = up;
+			dir = down;
 		}
+	}
+	currentSpeed = running ? runningSpeed : speed; //бежим или идём к цели
+	if (diffX == 0 && diffY == 0)
+	{
+		//достигли точки назначения, обнуляем 
+		dest.x = -1;
+		dest.y = -1;
 	}
 }
 
-void Creature::searchFor(String map)
+void Creature::searchFor(String map[][mapW], int thing)
 {
 	//поиск чего-либо
-	//в режиме поиска существо не знает, где ему искать то, что нужно
-	//поэтому выбирается случайная клетка карты
+	switch (thing)
+	{
+	case Water:
+		//ищем водную клетку
+		//ищем вокруг себя
+		for (int i = X - 2; i < X + 2 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 2; j < Y + 2 && j > -1 && j <mapH; j++)
+			{
+				if (map[j][i] == 'v')
+				{
+					//цель найдена рядом с существом
+					dest.x = i;
+					dest.y = j;
+				}
+			}
+		}
+		
+		break;
+	case Food:
+		//ищем куст или дерево 
+		for (int i = X - 2; i < X + 2 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 2; j < Y + 2 && j > -1 && j < mapH; j++)
+			{
+				if (map[j][i] == 'T' || map[j][i] == 'B')
+				{
+					//цель найдена рядом с существом
+					dest.x = i;
+					dest.y = j;
+				}
+			}
+		}
+		break;
+	case Cover:
+		//ищем укрытие. укрытием является куст или дерево
+		for (int i = X - 2; i < X + 2 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 2; j < Y + 2 && j > -1 && j < mapH; j++)
+			{
+				if (map[j][i] == 'T' || map[j][i] == 'B')
+				{
+					//цель найдена рядом с существом
+					dest.x = i;
+					dest.y = j;
+				}
+				cout << map[j][i].toAnsiString();
+			}
+		}
+		break;
+	}
+	//если около себя не нашли, то
+	if (dest.x == -1) //точка не назначена
+	{
+		dest = validCells[rand() % validCells.size()];
+	}
+	moveTo(dest.x, dest.y);
 }
 
 void Creature::die()
+{
+
+}
+
+void Creature::eat()
+{
+
+}
+
+void Creature::drink()
 {
 
 }

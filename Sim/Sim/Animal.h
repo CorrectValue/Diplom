@@ -23,7 +23,12 @@ public:
 	using Creature::goalPlanner;
 	void goalPlanner(int &time, int &weather);
 	static void prepareAvailibleGoals();
-	void actionPlanner();
+	using Creature::actionPlanner;
+	void actionPlanner(world &wrld);
+	using Creature::eat;
+	void eat();
+	using Creature::drink;
+	void drink();
 };
 
 #endif

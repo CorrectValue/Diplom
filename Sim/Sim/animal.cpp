@@ -31,6 +31,8 @@ animal::animal()
 	currentPause = 0;
 
 	running = false;
+	hidden = false;
+	tookDamage = false;
 
 	//задать облик. Поскольку у нас по умолчанию пока только свиньи, облик у всех один
 	tileset = "Images/CreatureTilesets/Animal/pig.png";
@@ -46,11 +48,19 @@ animal::animal()
 
 	dir = rand() % 4;
 
+	currentGoal = availibleGoals[Idle];
+
+	//обнуление точки назначения
+	dest.x = -1;
+	dest.y = -1;
+
 	//позиция в мире
 	cell tmp = validCells[rand() % validCells.size()];
-	x = tmp.x;
-	y = tmp.y;
-	sprite.setPosition(x*w, y*h);
+	X = tmp.x;
+	Y = tmp.y;
+	x = X*w;
+	y = Y*h;
+	sprite.setPosition(x, y);
 }
 
 void animal::die()
@@ -78,8 +88,31 @@ String animal::getAnimalData()
 	std::stringstream ss;
 	string str;
 
-	ss << id << "_hp=" << curHp << "/" << maxHp << "_st=" << curStamina << "/" << maxStamina << "_x=" << x << "_y=" << y;
-
+	ss << id << "_hp=" << curHp << "_st=" << curStamina;
+	switch (currentGoal.Goal)
+	{
+	case Eat:
+		ss << "_Eat";
+		break;
+	case Sleep:
+		ss << "_Sleep";
+		break;
+	case Run:
+		ss << "_Run";
+		break;
+	case Idle:
+		ss << "_Idle";
+		break;
+	case Rest:
+		ss << "_Rest";
+		break;
+	case Hide:
+		ss << "_Hide";
+		break;
+	case Drink:
+		ss << "_Drink";
+		break;
+	}
 	ss >> str;
 	String Str(str);
 	return Str;
@@ -150,25 +183,75 @@ void animal::prepareAvailibleGoals()
 	};
 }
 
-void animal::actionPlanner()
+void animal::actionPlanner(world &wrld)
 {
 	//планирует непосредственно действия, направленные на достижение цели
 	switch (currentGoal.Goal)
 	{
 	case Sleep:
 		//животные могут спать где угодно, максимально неприхотливы
+		currentSpeed = 0;
+		sleeping = true;
 		break;
 	case Eat:
 		//животные питаются травой, которая произрастает.. почти на всех клетках. Найти клетку и поесть
+		sleeping = false;
+		searchFor(wrld.TileMap, Food);
+		break;
+	case Drink:
+		//ищем водоём и пьём
+		sleeping = false;
+		searchFor(wrld.TileMap, Water);
 		break;
 	case Idle:
 		//если цель - полениться, то животное либо стоит на месте, либо ходит из угла в угол
+		sleeping = false;
+		if (dest.x == -1)
+		{
+			int randNum = rand() % 100;
+			if (randNum > 79)
+			{
+				//стоим на месте
+				currentSpeed = 0;
+			}
+			else
+			{
+				//идём куда-нибудь
+				dest = validCells[rand() % validCells.size()];
+			}
+		}
+		else
+			moveTo(dest.x, dest.y);
+		break;
+	case Hide:
+		//если цель - ныкаться, то ищем укрытие и нычемся!
+		sleeping = false;
+		searchFor(wrld.TileMap, Cover);
 		break;
 	case Run:
 		//в состоянии сваливания от проблем животное бежит в случайную точку карты
+		sleeping = false;
 		running = true;
 		//сгенерировать какую-то точку карты
-
+		if (dest.x == -1)
+		{
+			//генерим новую точку, если никакой ещё не сгенерировано
+			dest = validCells[rand() % validCells.size()];
+		}
+		//двинуться в неё
+		moveTo(dest.x, dest.y);
 		break;
 	}
+}
+
+void animal::eat()
+{
+	//при еде просто повышается счётчик сытости
+	satiety += 50;
+}
+
+void animal::drink()
+{
+	//у животного просто при питье жажда снижается
+	thirst += 40;
 }

@@ -28,7 +28,7 @@ int main()
 	vector<human> people;
 	animal::prepareValidCellsList(level);
 	animal::prepareAvailibleGoals();
-//	human::prepareAvailibleGoals();
+	human::prepareAvailibleGoals();
 	human::prepareValidCellsList(level);
 	human::prepareAppearances();
 	human::prepareNames();

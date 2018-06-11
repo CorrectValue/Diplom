@@ -1,20 +1,20 @@
-﻿Build started 10.06.2018 21:48:18.
+﻿Build started 11.06.2018 18:07:29.
      1>Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\include" /I"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt world.cpp
-         world.cpp
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(13): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(271): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(280): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(286): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(315): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(316): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(331): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(340): warning C4244: '-=' : conversion from 'float' to 'int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(472): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(594): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(649): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\world.cpp(658): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\include" /I"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D SFML_DYNAMIC /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Creature.cpp
+         Creature.cpp
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(63): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(68): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(76): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(78): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(86): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(90): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(93): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(96): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(138): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(140): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(147): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>c:\users\леха\documents\университет\дилдплом\diplom\sim\sim\creature.cpp(154): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\lib" /LIBPATH:"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" "tgui-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Debug\Sim.lib" /MACHINE:X86 Debug\animal.obj
          Debug\Creature.obj
@@ -27,4 +27,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.13
+Time Elapsed 00:00:00.75

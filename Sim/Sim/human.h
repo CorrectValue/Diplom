@@ -30,13 +30,19 @@ public:
 
 	int gender; //пол
 
-	//щас будет чорная магия
-	bool hasWeapon;
+	//человек отличается от животного способностью носить вещи
+	bool hasWeapon;	//есть оружие
+	bool hasWater;	//есть запас воды
+	bool hasFood;	//есть запас пищи
 
 	cell home; //домашняя клетка
 	
 	String name;
 	String lastName;
+
+	int currentState; //текущее состояние агента
+	int desiredState; //требуемое состояние агента
+	vector<action> actionSequence; //цепочка действий
 		
 	void generateName(); //генерирует имя персонажа
 	static void prepareNames();//единовременно готовит список имён и фамилий
@@ -53,8 +59,14 @@ public:
 	using Creature::goalPlanner;
 	void goalPlanner(int &time, int &weather);
 	static void prepareAvailibleGoals();
-	void actionPlanner();
+	void goalAnalyzer();
 	String getHumanData();
+	using Creature::eat;
+	void eat();
+	using Creature::drink;
+	void drink();
+	void makeSequence(); //составить последовательность действий
+	void performSequence(); //исполнить последовательность действий
 
 	human();
 

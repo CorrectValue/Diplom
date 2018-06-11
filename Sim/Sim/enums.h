@@ -134,12 +134,41 @@ struct action
 enum actions
 {
 	//перебор экшонов
+	getFood, 
+	getWater,
+	getHome,
+	getSleep,
+	eatFood,
+	drinkWater,
+	runFromAttack,
+	takeRest,
+	doNothing
 };
 
 enum conditions
 {
 	//пред- и постусловия
+	noFoodInBag,
+	FoodInBag,
+	noWaterInBag,
+	waterInBag,
+	notAtHome,
+	atHome,
+	ate,
+	drunk,
+	slept, 
+	noDanger,
+	inDanger,
+	feelTired,
+	notTired,
+	noPurpose
+};
 
+enum things
+{
+	Water,
+	Food,
+	Cover
 };
 
 //enum items

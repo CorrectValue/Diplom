@@ -10,7 +10,7 @@ void world::timeManipulation(float time)
 	//как бох
 
 	//получили время, прошедшее с момента последнего обновления, надо каким-то образом прирастить его к имеющемуся
-	currentTimeSeconds += time * speed; //СКОРОСТЬ ПОЧЕМУ-ТО НЕ РАБОТАЕТ
+	currentTimeSeconds += time * speed; 
 
 	//время прошло - таймер погоды сбиваем
 	//weatherTimer -= time * speed;
@@ -285,6 +285,9 @@ world::world(int Season, int Weather, int Hours, int Minutes, int Count)
 		//рассветные сумерки. с каждой минутой альфа синего экрана уменьшается
 		blueAlphaColor = stepRiseSetAlpha * (minutesPastMidnight - MinutesRiseTime);
 	}
+
+	//установить таймер погоды
+	weatherTimer = 7200 + rand() % 165600;
 
 	//набить мир
 	makeWater();

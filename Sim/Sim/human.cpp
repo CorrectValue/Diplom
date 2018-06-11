@@ -24,11 +24,13 @@ human::human()
 	generateNewHuman();
 
 	cell tmp = validCells[rand() % validCells.size()];
-	x = tmp.x;
-	y = tmp.y;
+	X = tmp.x;
+	Y = tmp.y;
+	x = X*w;
+	y = Y*h;
 	w = 16;
 	h = 16;
-	sprite.setPosition(x*w, y*h);
+	sprite.setPosition(x, y);
 
 }
 
@@ -289,7 +291,11 @@ void human::generateNewHuman()
 	//направление движения в начале
 	dir = rand() % 4;
 
+	//обнуление точки назначения
+	dest.x = -1;
+	dest.y = -1;
 
+	currentGoal = availibleGoals[Idle];
 }
 
 void human::checkDeathDate()
@@ -392,34 +398,57 @@ void human::prepareHouses(world &wrld)
 	}
 }
 
-void human::actionPlanner()
+void human::goalAnalyzer()
 {
 	//планировщик действий для достижения цели
 	switch (currentGoal.Goal)
 	{
 	case Run:
-		//в случае сваливания генерируется рандомная точка
-		//и мувту в неё
+		//
+		currentState = inDanger;
+		desiredState = noDanger;
 		break;
 	case Sleep:
-		//для сна нужно добраться домой
-		moveTo(home.x, home.y);
+		//текущее состояние
+		if (X == home.x && Y == home.y)
+			currentState = atHome;
+		else
+			currentState = notAtHome;
+		desiredState = slept;
 		break;
 	case Eat:
 		//тут либо поиск пищи, либо, если она есть, поглощение
+		if (hasFood)
+			currentState = FoodInBag;
+		else
+			currentState = noFoodInBag;
+		desiredState = ate;
 		break;
 	case Drink:
 		//опять же, есть вода - пьём, нет вода - ищем
+		if (hasWater)
+			currentState = waterInBag;
+		else
+			currentState = noWaterInBag;
+		desiredState = drunk;
 		break;
 	case Idle:
 		//ленивое состояние - либо стоим на месте, либо ходим из угла в угол
+		currentState = noPurpose;
+		desiredState = noPurpose;
 		break;
 	case Rest:
 		//всё просто, прям где стояли - там и остаёмся
+		currentState = feelTired;
+		desiredState = notTired;
 		break;
 	case Hide:
-		//бежим домой
-		moveTo(home.x, home.y);
+		//если персонаж дома, то требуемое состояние сразу достигнуто
+		if (X == home.x && Y == home.y)
+			currentState = atHome;
+		else
+			currentState = notAtHome;
+		desiredState = atHome;
 		break; 
 	}
 }
@@ -427,7 +456,17 @@ void human::actionPlanner()
 void human::prepareAvailibleActions()
 {
 	//готовит список доступных действий
-
+	availibleActions = {
+		{noFoodInBag, getFood, FoodInBag},
+		{noWaterInBag, getWater, waterInBag},
+		{FoodInBag, eatFood, ate},
+		{waterInBag, drinkWater, drunk},
+		{inDanger, runFromAttack, noDanger},
+		{atHome, getSleep, slept},
+		{feelTired, takeRest, notTired},
+		{noPurpose, doNothing, noPurpose},
+		{notAtHome, getHome, atHome}
+	};
 }
 
 String human::getHumanData()
@@ -437,8 +476,76 @@ String human::getHumanData()
 	string str;
 
 	ss << id << "_" << name.toAnsiString() << "_" << lastName.toAnsiString() << "_hp=" << curHp << "/" << maxHp << "_st=" << curStamina << "/" << maxStamina << "_x=" << x << "_y=" << y;
+	switch (currentGoal.Goal)
+	{
+	case Eat:
+		ss << "_Eat";
+		break;
+	case Sleep:
+		ss << "_Sleep";
+		break;
+	case Run:
+		ss << "_Run";
+		break;
+	case Idle:
+		ss << "_Idle";
+		break;
+	case Rest:
+		ss << "_Rest";
+		break;
+	case Hide:
+		ss << "_Hide";
+		break;
+	case Drink:
+		ss << "_Drink";
+		break;
+	}
 	
 	ss >> str;
 	String Str(str);
 	return Str;
+}
+
+void human::eat()
+{
+	//у человека сжирается запас еды
+	hasFood = false;
+	satiety += 40;
+}
+
+void human::drink()
+{
+	//убирается вода из рюкзака, снижается жажда
+	hasWater = false;
+	thirst += 40;
+}
+
+void human::makeSequence()
+{
+	//построить последовательность действий, направленную на достижение какой-то цели
+	//найти в списке доступных действий то, которое подходит для начала цепочки
+	for (int i = 0; i < availibleActions.size(); i++)
+	{
+		if (availibleActions[i].precondition == currentState) //если предусловие действия равно текущему состоянию
+			actionSequence.insert(actionSequence.end(), availibleActions[i]); //пхаем в начало цепочки
+	}
+	//строим оставшуюся цепочку
+	while (actionSequence[actionSequence.size() - 1].result != desiredState)
+	{
+		for (int i = 0; i < availibleActions.size(); i++)
+		{
+			if (availibleActions[i].precondition == actionSequence[actionSequence.size() - 1].result)
+			{
+				actionSequence.insert(actionSequence.end(), availibleActions[i]); //помещаем новое действие в цепочку
+			}
+		}
+	}
+	//по идее, это должно работать...
+
+}
+
+void performSequence()
+{
+	//выполнить последовательность действий
+
 }
