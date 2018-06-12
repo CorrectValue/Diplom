@@ -16,6 +16,7 @@ void Creature::update(float time, world &wrld)
 	//если существо живо:
 	if (alive)
 	{
+		sleeping = false; //не спим, но если ночь, то спим
 		//определить цель существования
 		goalPlanner(wrld.currentTimeHours, wrld.curWeather);
 		actionPlanner(wrld);
@@ -60,12 +61,12 @@ void Creature::update(float time, world &wrld)
 		if (x + dx*time < wrld.getWidth() * 16 && x + dx*time > 0)
 		{
 			x += dx*time;
-			X = x / w;
+			X = (x+w/2) / w;//центр спрайта
 		}
 		if (y + dy*time < wrld.getHeight() * 16 && y + dy*time > 0)
 		{
 			y += dy*time;
-			Y = y / h;
+			Y = (y+h/2) / h;
 		}
 
 		mapInteraction(wrld);

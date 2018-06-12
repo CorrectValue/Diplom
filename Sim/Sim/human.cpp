@@ -10,6 +10,7 @@ vector<String> human::maleAppearances;
 vector<String> human::femaleAppearances;
 vector<goal> human::availibleGoals;
 vector<cell> human::houses;
+vector<action> human::availibleActions;
 int human::globalID = 0;
 
 human::human()
@@ -26,10 +27,13 @@ human::human()
 	cell tmp = validCells[rand() % validCells.size()];
 	X = tmp.x;
 	Y = tmp.y;
-	x = X*w;
-	y = Y*h;
 	w = 16;
 	h = 16;
+	x = X*w;
+	y = Y*h;
+
+
+
 	sprite.setPosition(x, y);
 
 }
@@ -252,6 +256,7 @@ void human::generateNewHuman()
 	intelligence = 1 + rand() % 10;
 	strength = 1 + rand() % 10;
 	endurance = 1 + rand() % 10;
+	agility = 1 + rand() % 10;
 
 	//хп и стамина рассчитываютс€, исход€ из
 	maxStamina = endurance * 87.5 + strength * 53.5; // ну просто формулка
@@ -290,6 +295,16 @@ void human::generateNewHuman()
 	currentSpeed = 0;
 	//направление движени€ в начале
 	dir = rand() % 4;
+
+	//не бит, не спит, не бежит
+	tookDamage = false;
+	sleeping = false;
+	running = false;
+
+	//по умолчанию в кармане есть фл€га с водой и бутерброд
+	hasFood = true;
+	hasWater = true;
+	hasWeapon = true;
 
 	//обнуление точки назначени€
 	dest.x = -1;
@@ -401,6 +416,8 @@ void human::prepareHouses(world &wrld)
 void human::goalAnalyzer()
 {
 	//планировщик действий дл€ достижени€ цели
+	//в первую очередь очищаем магазин действий
+	actionSequence.clear();
 	switch (currentGoal.Goal)
 	{
 	case Run:
@@ -475,7 +492,7 @@ String human::getHumanData()
 	std::stringstream ss;
 	string str;
 
-	ss << id << "_" << name.toAnsiString() << "_" << lastName.toAnsiString() << "_hp=" << curHp << "/" << maxHp << "_st=" << curStamina << "/" << maxStamina << "_x=" << x << "_y=" << y;
+	ss << id << "_" << name.toAnsiString() << "_" << lastName.toAnsiString() << "_hp=" << curHp << "/" << maxHp << "_st=" << curStamina << "/" << maxStamina << "_x=" << X << "_y=" << Y;
 	switch (currentGoal.Goal)
 	{
 	case Eat:
@@ -511,6 +528,8 @@ void human::eat()
 	//у человека сжираетс€ запас еды
 	hasFood = false;
 	satiety += 40;
+	//действие выполнено, переход в следующее состо€ние
+	currentState = ate;
 }
 
 void human::drink()
@@ -518,6 +537,8 @@ void human::drink()
 	//убираетс€ вода из рюкзака, снижаетс€ жажда
 	hasWater = false;
 	thirst += 40;
+	//действие выполнено, переход в следующее состо€ние
+	currentState = drunk;
 }
 
 void human::makeSequence()
@@ -544,8 +565,138 @@ void human::makeSequence()
 
 }
 
-void performSequence()
+void human::performSequence()
 {
 	//выполнить последовательность действий
+	//есть вектор с действи€ми, нужно перебрать каждое
+	//пробегаем последовательность и провер€ем, какое действие нужно сейчас выполн€ть
+	for (int i = 0; i < actionSequence.size(); i++)
+	{
+		if (actionSequence[i].precondition == currentState)
+		{
+			//если текущее состо€ние персонажа такое же, как предусловие действи€, то его и выполн€ем
+			currentAction = actionSequence[i].Action;
+		}
+	}
 
+}
+
+void human::performAction(world &wrld)
+{
+	//выполнить конкретное действие
+	switch (currentAction)
+	{
+	case getFood:
+		//поиск пищи. ѕищи нет в инвентаре
+		searchFor(wrld.TileMap, Food);
+		for (int i = X - 1; i < X + 1 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 1; j < Y + 1 && j > -1 && j < mapH; j++)
+			{
+				if (wrld.TileMap[j][j] == 'T' || wrld.TileMap[j][j] == 'B')
+				{
+					//р€дом с текущей клеткой есть еда, наполн€ем карманы
+					hasFood = true;
+				}
+			}
+		}
+		if (hasFood)
+			currentState = FoodInBag;
+		break;
+	case getWater:
+		//воды нет в рюкзаке, надо найти
+		searchFor(wrld.TileMap, Water);
+		for (int i = X - 1; i < X + 1 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 1; j < Y + 1 && j > -1 && j < mapH; j++)
+			{
+				if (wrld.TileMap[j][j] == 'v' )
+				{
+					//р€дом с текущей клеткой есть вода, наполн€ем фл€гу
+					hasWater = true;
+				}
+			}
+		}
+
+		if (hasWater)
+			currentState = waterInBag;
+		break;
+	case getHome:
+		//идти домой
+		moveTo(home.x, home.y);
+		if (X == home.x && Y == home.y)
+			currentState = atHome;
+		break;
+	case getSleep:
+		//поспать
+		currentSpeed = 0;
+		sleeping = true;
+		break;
+	case eatFood:
+		//съесть пищу из инвентар€
+		eat();
+		break;
+	case drinkWater:
+		//выпить воду из инвентар€
+		drink();
+		break;
+	case runFromAttack:
+		//убегать от атаки
+		//сгенерировать точку и побежать в неЄ
+		if (dest.x == -1 && X == attacked.x && Y == attacked.y) //если точка ещЄ не сгенерирована
+		{
+			dest = validCells[rand() % validCells.size()];
+		}
+		running = true;
+		moveTo(dest.x, dest.y);
+		//проверка: если достигли точки, то цель достигнута
+		if (X != attacked.x && Y != attacked.y)
+		{
+			//из точки убежали
+			currentState = noDanger;
+		}
+		break;
+	case takeRest:
+		//устал, присел отдохнуть
+		currentSpeed = 0;
+		break;
+	case doNothing:
+		//делаем ничего
+		slack();
+		break;
+	}
+}
+
+void human::slack()
+{
+	//бездельничать
+	sleeping = false;
+	if (dest.x == -1)
+	{
+		int randNum = rand() % 100;
+		if (randNum > 79)
+		{
+			//стоим на месте
+			currentSpeed = 0;
+		}
+		else
+		{
+			//идЄм куда-нибудь
+			dest = validCells[rand() % validCells.size()];
+		}
+	}
+	else
+		moveTo(dest.x, dest.y);
+}
+
+void human::actionPlanner(world &wrld)
+{
+	//проанализировать цель и текущее состо€ние агента
+	goalAnalyzer();
+	//сформировать последовательность действий
+	makeSequence();
+	//выполнить еЄ
+	performSequence();
+	//выполнить действие
+	performAction(wrld);
 }

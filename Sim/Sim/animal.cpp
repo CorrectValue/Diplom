@@ -194,14 +194,36 @@ void animal::actionPlanner(world &wrld)
 		sleeping = true;
 		break;
 	case Eat:
-		//животные питаются травой, которая произрастает.. почти на всех клетках. Найти клетку и поесть
+		//животные питаются фруктами и ягодами с деревьев и кустов
 		sleeping = false;
 		searchFor(wrld.TileMap, Food);
+		for (int i = X - 1; i < X + 1 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 1; j < Y + 1 && j > -1 && j < mapH; j++)
+			{
+				if (wrld.TileMap[j][j] == 'T' || wrld.TileMap[j][j] == 'B')
+				{
+					//рядом с текущей клеткой есть еда, жрём
+					eat();
+				}
+			}
+		}
 		break;
 	case Drink:
 		//ищем водоём и пьём
 		sleeping = false;
 		searchFor(wrld.TileMap, Water);
+		for (int i = X - 1; i < X + 1 && i > -1 && i < mapW; i++)
+		{
+			for (int j = Y - 1; j < Y + 1 && j > -1 && j < mapH; j++)
+			{
+				if (wrld.TileMap[j][j] == 'v')
+				{
+					//рядом с текущей клеткой есть вода, пьём
+					drink();
+				}
+			}
+		}
 		break;
 	case Idle:
 		//если цель - полениться, то животное либо стоит на месте, либо ходит из угла в угол

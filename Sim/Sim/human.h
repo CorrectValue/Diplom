@@ -36,12 +36,15 @@ public:
 	bool hasFood;	//есть запас пищи
 
 	cell home; //домашняя клетка
+
+	cell attacked; //клетка, откуда убегает человек
 	
 	String name;
 	String lastName;
 
 	int currentState; //текущее состояние агента
 	int desiredState; //требуемое состояние агента
+	int currentAction; //текущее действие
 	vector<action> actionSequence; //цепочка действий
 		
 	void generateName(); //генерирует имя персонажа
@@ -49,6 +52,7 @@ public:
 	static void prepareAppearances(); //единожды готовит списки обликов
 	static void prepareHouses(world &wrld);
 	static void prepareAvailibleActions(); //готовит список действий
+	static void prepareAvailibleGoals();
 	using Creature::die;
 	void die();
 	using Creature::respawn;
@@ -58,15 +62,19 @@ public:
 	void checkDeathDate();
 	using Creature::goalPlanner;
 	void goalPlanner(int &time, int &weather);
-	static void prepareAvailibleGoals();
+
 	void goalAnalyzer();
 	String getHumanData();
 	using Creature::eat;
 	void eat();
 	using Creature::drink;
 	void drink();
+	using Creature::actionPlanner;
+	void actionPlanner(world &wrld);
 	void makeSequence(); //составить последовательность действий
 	void performSequence(); //исполнить последовательность действий
+	void performAction(world &wrld); //выполнить одно действие
+	void slack(); //делать ничего
 
 	human();
 

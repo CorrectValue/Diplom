@@ -48,7 +48,7 @@ int main()
 
 		float time = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
-		time = time / 800; //было 800, не понравится - вернём
+		time = time / 500; //было 800, не понравится - вернём
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -89,6 +89,7 @@ int main()
 		}
 		//for (int i = 0; i < peopleCount; i++)
 		//{
+		//	people[i].update(time, level);
 		//	window.draw(people[i].sprite);
 		//}
 		level.weatherManipulation();
