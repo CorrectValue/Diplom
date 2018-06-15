@@ -911,8 +911,8 @@ void world::makeWater()
 		currentY = waterCenterY;
 		while (waterSize > 0)
 		{
-			dr = rand() % 1; //направление движени€ ’ или Y
-			pm = rand() % 1; // плюс или минус
+			dr = rand() % 2; //направление движени€ ’ или Y
+			pm = rand() % 2; // плюс или минус
 			//это хрень
 			//или нет? ещЄ не тестил
 			switch (dr)

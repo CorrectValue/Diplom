@@ -462,10 +462,10 @@ void human::goalAnalyzer()
 	case Hide:
 		//если персонаж дома, то требуемое состояние сразу достигнуто
 		if (X == home.x && Y == home.y)
-			currentState = atHome;
+			currentState = hiding;
 		else
-			currentState = notAtHome;
-		desiredState = atHome;
+			currentState = notHidden;
+		desiredState = hiding;
 		break; 
 	}
 }
@@ -482,7 +482,8 @@ void human::prepareAvailibleActions()
 		{atHome, getSleep, slept},
 		{feelTired, takeRest, notTired},
 		{noPurpose, doNothing, noPurpose},
-		{notAtHome, getHome, atHome}
+		{notAtHome, getHome, atHome},
+		{notHidden, hideAtHome, hiding}
 	};
 }
 

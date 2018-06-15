@@ -142,7 +142,8 @@ enum actions
 	drinkWater,
 	runFromAttack,
 	takeRest,
-	doNothing
+	doNothing,
+	hideAtHome
 };
 
 enum conditions
@@ -161,7 +162,9 @@ enum conditions
 	inDanger,
 	feelTired,
 	notTired,
-	noPurpose
+	noPurpose,
+	hiding,
+	notHidden
 };
 
 enum things

@@ -1,0 +1,76 @@
+﻿Build started 15.06.2018 19:10:06.
+     1>Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\include" /I"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D SFML_STATIC /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Creature.cpp Main.cpp UI.cpp animal.cpp human.cpp world.cpp
+         Creature.cpp
+     1>Creature.cpp(66): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>Creature.cpp(71): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>Creature.cpp(79): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>Creature.cpp(83): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Creature.cpp(85): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>Creature.cpp(94): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>Creature.cpp(101): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>Creature.cpp(105): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>Creature.cpp(107): warning C4305: '-=' : truncation from 'double' to 'float'
+     1>Creature.cpp(111): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>Creature.cpp(113): warning C4305: '+=' : truncation from 'double' to 'float'
+     1>Creature.cpp(155): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>Creature.cpp(157): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
+     1>Creature.cpp(164): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>Creature.cpp(171): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         Main.cpp
+     1>Main.cpp(39): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>Main.cpp(49): warning C4244: 'initializing' : conversion from 'sf::Int64' to 'float', possible loss of data
+     1>Main.cpp(66): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Main.cpp(68): warning C4018: '>' : signed/unsigned mismatch
+     1>Main.cpp(70): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Main.cpp(74): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+     1>Main.cpp(76): warning C4018: '>' : signed/unsigned mismatch
+     1>Main.cpp(78): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         UI.cpp
+     1>UI.cpp(333): warning C4018: '<' : signed/unsigned mismatch
+     1>UI.cpp(338): warning C4018: '<' : signed/unsigned mismatch
+         animal.cpp
+     1>animal.cpp(42): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>animal.cpp(45): warning C4305: '=' : truncation from 'double' to 'float'
+     1>animal.cpp(46): warning C4305: '=' : truncation from 'double' to 'float'
+     1>animal.cpp(70): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>animal.cpp(79): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>animal.cpp(80): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+         human.cpp
+     1>human.cpp(231): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>human.cpp(262): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>human.cpp(264): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>human.cpp(293): warning C4305: '=' : truncation from 'double' to 'float'
+     1>human.cpp(294): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>human.cpp(549): warning C4018: '<' : signed/unsigned mismatch
+     1>human.cpp(557): warning C4018: '<' : signed/unsigned mismatch
+     1>human.cpp(574): warning C4018: '<' : signed/unsigned mismatch
+         world.cpp
+     1>world.cpp(12): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+     1>world.cpp(282): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+     1>world.cpp(291): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>world.cpp(297): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>world.cpp(329): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>world.cpp(330): warning C4244: '=' : conversion from 'unsigned int' to 'float', possible loss of data
+     1>world.cpp(345): warning C4244: '+=' : conversion from 'float' to 'int', possible loss of data
+     1>world.cpp(354): warning C4244: '-=' : conversion from 'float' to 'int', possible loss of data
+     1>world.cpp(486): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>world.cpp(608): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>world.cpp(663): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>world.cpp(672): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Release\Sim.exe" /NOLOGO /LIBPATH:"C:\Users\Леха\Documents\Программирование\SFML-2.4.2-windows-vc12-32-bit\SFML-2.4.2\lib" /LIBPATH:"C:\Users\Леха\Documents\Программирование\TGUI-0.7.6-vc12-32bit-for-SFML-2.4.2\TGUI-0.7\lib" "sfml-system-s.lib" "sfml-window-s.lib" "sfml-graphics-s.lib" opengl32.lib freetype.lib jpeg.lib glew32.lib winmm.lib "tgui-s.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Release\Sim.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Release\Sim.lib" /MACHINE:X86 /SAFESEH Release\animal.obj
+         Release\Creature.obj
+         Release\human.obj
+         Release\Main.obj
+         Release\UI.obj
+         Release\world.obj
+         Generating code
+         Finished generating code
+         Sim.vcxproj -> C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Release\Sim.exe
+     1>Done Building Project "C:\Users\Леха\Documents\Университет\Дилдплом\Diplom\Sim\Sim\Sim.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:08.09

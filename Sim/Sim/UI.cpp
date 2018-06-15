@@ -380,7 +380,7 @@ void UI::makeRandom(RenderWindow &window)
 	//задаёт случайные стартовые параметры
 	season = rand() % 4;
 	weather = rand() % 5;
-	count = rand() % 190 + 10;
+	count = rand() % 50 + 10;
 	hours = rand() % 24;
 	minutes = rand() % 60;
 	//закрыть окно
