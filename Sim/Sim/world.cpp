@@ -7,7 +7,6 @@ vector<cell> world::validCells;
 void world::timeManipulation(float time)
 {
 	//управляет временем в мире
-	//как бох
 
 	//получили время, прошедшее с момента последнего обновления, надо каким-то образом прирастить его к имеющемуся
 	currentTimeSeconds += time * speed; 
@@ -90,13 +89,25 @@ void world::timeManipulation(float time)
 
 	//переопределение сезона
 	if (month > 2 && month < 6)
+	{
 		season = Spring;
+		tileset = "Images/map-spring.png";
+	}
 	if (month > 5 && month < 9)
+	{
 		season = Summer;
+		tileset = "Images/map-summer.png";
+	}
 	if (month > 8 && month < 12)
+	{
 		season = Fall;
+		tileset = "Images/map-fall.png";
+	}
 	if (month == 12 || month < 3)
+	{
 		season = Winter;
+		tileset = "Images/map-winter.png";
+	}
 
 	//переопределение времени суток
 	if (currentTimeHours > 22 || currentTimeHours < 5)
@@ -155,11 +166,11 @@ world::world(int Season, int Weather, int Hours, int Minutes, int Count)
 		month = Jul;
 		break;
 	case Spring:
-		tileset = "Images/map-summer.png";
+		tileset = "Images/map-spring.png";
 		month = Apr;
 		break;
 	case Fall:
-		tileset = "Images/map-summer.png";
+		tileset = "Images/map-fall.png";
 		month = Oct;
 		break;
 	}
@@ -833,9 +844,9 @@ void world::distributeObjects(int Count)
 	//это камень, куст, дерево
 	//сгенерировать число камней, кустов, деревьев
 	int rocksCount, bushesCount, treesCount, randNum;
-	rocksCount = rand() % (width*height/100) + 1; //девятая часть карты должна быть занята камнями
-	bushesCount = rand() % (width*height / 100) + 1; //кустов должно быть побольше, т.к. с них жители берут ягоды
-	treesCount = rand() % (width*height / 100) + 1; //деревьев должно быть ещё больше, т.к. это не только еда, но и древесина
+	rocksCount = rand() % (width*height/100) + 1; //сотая часть карты должна быть занята камнями
+	bushesCount = rand() % (width*height / 100) + 1; 
+	treesCount = rand() % (width*height / 100) + 1; 
 	//ну и разместить
 	//камни
 	for (int i = 0; i < rocksCount; i++)

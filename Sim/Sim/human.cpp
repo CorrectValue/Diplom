@@ -379,11 +379,11 @@ void human::prepareAvailibleGoals()
 	//порядок очень важен внутри вектора, очень, правда
 	goal slp = { Sleep, 2 };
 	goal et = { Eat, 3 };
-	goal drk = { Drink, 5 };
+	goal drk = { Drink, 4 };
 	goal idl = { Idle, 0 };
 	goal rst = { Rest, 1 };
-	goal rn = { Run, 7 };
-	goal hd = { Hide, 6 };
+	goal rn = { Run, 6 };
+	goal hd = { Hide, 5 };
 	
 	availibleGoals = {
 		slp,

@@ -17,6 +17,8 @@ void Creature::update(float time, world &wrld)
 	if (alive)
 	{
 		sleeping = false; //не спим, но если ночь, то спим
+		running = false; //не бежим, но если надо, бежим
+		hidden = false; //не прячемся, но если надо, прячемся
 		//определить цель существования
 		goalPlanner(wrld.currentTimeHours, wrld.curWeather);
 		actionPlanner(wrld);
@@ -170,28 +172,34 @@ void Creature::mapInteraction(world wrld)
 			}
 			if (wrld.TileMap[i][j] == 'B')//куст, можно спрятаться
 			{
-				hidden = true;
+				if (currentGoal.Goal == Hide)
+					hidden = true;
 			}
 			if (wrld.TileMap[i][j] == 'T')//дерево, под ним можно спрятаться
 			{
-				hidden = true;
+				if (currentGoal.Goal == Hide)
+					hidden = true;
 			}
 			//пропасти: существо может случайно упасть в пропасть и погибнуть
 			if (wrld.TileMap[i][j] == '=')//пропасть верхняя, наступил - умер
 			{
 				//тут надо подумать, как округлить координату
+				die();
 			}
 			if (wrld.TileMap[i][j] == '_')//пропасть нижняя, наступил - умер
 			{
 				//тут надо подумать, как округлить координату
+				die();
 			}
 			if (wrld.TileMap[i][j] == '/')//пропасть левая, наступил - умер
 			{
 				//тут надо подумать, как округлить координату
+				die();
 			}
 			if (wrld.TileMap[i][j] == '\\')//пропасть правая, наступил - умер
 			{
 				//тут надо подумать, как округлить координату
+				die();
 			}
 		}
 	}

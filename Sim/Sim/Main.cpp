@@ -36,7 +36,7 @@ int main()
 	human::prepareHouses(level);
 
 	int animalsCount = UI::count / 4;
-	int peopleCount = UI::count;
+	int peopleCount = UI::count * 0.75;
 	
 	//набить этот вектор ровно необходимым количеством людей
 	animals.resize(animalsCount);
@@ -85,13 +85,15 @@ int main()
 		for (int i = 0; i < animalsCount; i++)
 		{
 			animals[i].update(time, level); //левел передаётся теперь по ссылке, всё быстро и норм
-			window.draw(animals[i].sprite);
+			if (!animals[i].hidden)
+				window.draw(animals[i].sprite);
 		}
-		//for (int i = 0; i < peopleCount; i++)
-		//{
-		//	people[i].update(time, level);
-		//	window.draw(people[i].sprite);
-		//}
+		for (int i = 0; i < peopleCount; i++)
+		{
+			people[i].update(time, level);
+			if (people[i].currentState != atHome)
+			window.draw(people[i].sprite);
+		}
 		level.weatherManipulation();
 		level.envManipulation(window);
 		level.displayInfo();

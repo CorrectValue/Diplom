@@ -167,12 +167,12 @@ void animal::prepareAvailibleGoals()
 	//питьё
 	//сон
 	//лень
-	goal slp = { Sleep, 1 };
+	goal slp = { Sleep, 2 };
 	goal et = { Eat, 3 };
-	goal drk = { Drink, 5 };
+	goal drk = { Drink, 4 };
 	goal idl = { Idle, 0 };
-	goal hd = { Hide, 6 };
-	goal rn = { Run, 7 };
+	goal hd = { Hide, 5 };
+	goal rn = { Run, 6 };
 	availibleGoals = {
 		slp,
 		et,
@@ -195,7 +195,7 @@ void animal::actionPlanner(world &wrld)
 		break;
 	case Eat:
 		//животные питаются фруктами и ягодами с деревьев и кустов
-		sleeping = false;
+
 		searchFor(wrld.TileMap, Food);
 		for (int i = X - 1; i < X + 1 && i > -1 && i < mapW; i++)
 		{
@@ -211,7 +211,7 @@ void animal::actionPlanner(world &wrld)
 		break;
 	case Drink:
 		//ищем водоём и пьём
-		sleeping = false;
+
 		searchFor(wrld.TileMap, Water);
 		for (int i = X - 1; i < X + 1 && i > -1 && i < mapW; i++)
 		{
@@ -227,7 +227,7 @@ void animal::actionPlanner(world &wrld)
 		break;
 	case Idle:
 		//если цель - полениться, то животное либо стоит на месте, либо ходит из угла в угол
-		sleeping = false;
+
 		if (dest.x == -1)
 		{
 			int randNum = rand() % 100;
@@ -247,12 +247,12 @@ void animal::actionPlanner(world &wrld)
 		break;
 	case Hide:
 		//если цель - ныкаться, то ищем укрытие и нычемся!
-		sleeping = false;
+
 		searchFor(wrld.TileMap, Cover);
 		break;
 	case Run:
 		//в состоянии сваливания от проблем животное бежит в случайную точку карты
-		sleeping = false;
+
 		running = true;
 		//сгенерировать какую-то точку карты
 		if (dest.x == -1)
